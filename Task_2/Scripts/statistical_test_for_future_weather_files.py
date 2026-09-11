@@ -1,19 +1,5 @@
 '''
 MEWS / fAMY / fTMY Statistical Verification — Baseline vs. Future EPW
-======================================================================
-COMPARE_MODE 하나만 바꾸면 세 가지 소스 전부 지원
-
-  'mews' : MEWS Stochastic EPW  (시나리오/연도별 그룹)
-  'famy' : fAMY EPW             (RCP 시나리오/연도별 그룹)
-  'ftmy' : fTMY EPW             (기간별 그룹)
-
-ΔT 기준: Baseline TMYx EPW
-  HW: TMAX > Baseline 월별 90th percentile
-  CS: TMIN < Baseline 월별 10th percentile
-  ΔT = 극한일 온도 − 해당 월 평균온도
-
-Pass (p>0.05): 미래 극한 이벤트 강도 ≈ 현재
-Fail (p≤0.05): 미래 극한 이벤트 강도 ≠ 현재 → 기후변화 신호
 '''
 
 from matplotlib.colors import ListedColormap
@@ -29,9 +15,6 @@ from mews.weather.alter import Alter
 import matplotlib.dates as mdates
 import re
 
-# ══════════════════════════════════════════════════════════════════════
-# ★ 사용자 설정 — 이 섹션만 수정
-# ══════════════════════════════════════════════════════════════════════
 
 location = ['Miami', 'Tampa', 'Tucson', 'Atlanta', 'ElPaso', 'SanDiego',
             'NewYork', 'Albuquerque', 'Seattle', 'Buffalo', 'Denver',
@@ -55,7 +38,7 @@ ftmy_scenario = rcp_scenarios[1]   # 'RCP4.5' | 'RCP7.0' | 'RCP8.5'
 base_years = base_year[0]
 
 # Baseline TMYx
-main_c       = 'C:/Users/kkuio/OneDrive/바탕 화면/Weather data/'
+main_c       = '' # main file path
 base_epw_dir = main_c + f'TMYx/{test_loc}/{base_years}/'
 
 # MEWS 
@@ -74,19 +57,19 @@ ftmy_direct_dir  = main_c + f'FTMY/{test_loc}/'
 # extreme event percentile
 HW_PCTL      = 90
 CS_PCTL      = 10
-# ══════════════════════════════════════════════════════════════════════
+
 
 COL          = 'Dry Bulb Temperature'
 result_dir   = main_c + f'KSresult/{test_loc}/{COMPARE_MODE}/'
 os.makedirs(result_dir, exist_ok=True)
 MONTH_LABELS = ['Jan','Feb','Mar','Apr','May','Jun',
                 'Jul','Aug','Sep','Oct','Nov','Dec']
-print(f'분석: {test_loc}  모드: {COMPARE_MODE.upper()}'
-      f'  (HW>{HW_PCTL}th / CS<{CS_PCTL}th percentile)')
 
 
-# ── 색상 / 레이블 ────────────────────────────────────────────────────
-FAMY_UNIFORM_COLOR = '#4C72B0'   # famy 막대 전용 단일 색상 (Fig3, Fig4 공통)
+
+# color label setup
+
+FAMY_UNIFORM_COLOR = '#4C72B0'   # famy only
 
 scenario_palette = {
     # SSP
@@ -115,24 +98,15 @@ def clean_label(s, y=None):
     return f'{s}_{y}' if y else str(s)
 
 
-# ── EPW 로드 ──────────────────────────────────────────────────────────
-# =============================================================================
-# def conv_epw(path):
-#     df = Alter(path).epwobj.dataframe.copy()
-#     df['datetime'] = pd.to_datetime(dict(
-#         year=2004, month=df['Month'], day=df['Day'], hour=df['Hour']-1))
-#     return df.set_index('datetime')
-# =============================================================================
-
-BASE_YR = 2003   # 평년(365일) 기준 — conv_epw와 이벤트 윈도우 계산에서 공통으로 사용
+BASE_YR = 2003   # 365 days
 def conv_epw(path):
     df = Alter(path).epwobj.dataframe.copy()
-    df = df[~((df['Month'] == 2) & (df['Day'] == 29))].copy()   # 2/29 제거해서 모든 파일 365일로 통일
+    df = df[~((df['Month'] == 2) & (df['Day'] == 29))].copy()   # remove 2/29, not considering leap years
     df['datetime'] = pd.to_datetime(dict(
-        year=BASE_YR, month=df['Month'], day=df['Day'], hour=df['Hour']-1))   # 2003=평년
+        year=BASE_YR, month=df['Month'], day=df['Day'], hour=df['Hour']-1))   
     return df.set_index('datetime')
 
-# ── 파일 파서 ────────────────────────────────────────────────────────
+# parsing
 def parse_mews(f):
     """
     USA_WA_Seattle-Tacoma.Intl.AP.727930_TMYx.2007-2021SSP245_2020_5%_r0.epw
@@ -150,7 +124,7 @@ def parse_mews(f):
 def parse_famy(f):
     """
     G53011603_RCP8.5_2045_lat47.639_long-122.372.epw
-    5년 블록으로 그룹핑:
+    group by 5 years:
       2045-2049 → '2040s'
       2050-2054 → '2050s'
       2085-2089 → '2080s'
@@ -166,7 +140,7 @@ def parse_famy(f):
     elif 2050 <= yr <= 2054: block = '2050s'
     elif 2085 <= yr <= 2089: block = '2080s'
     elif 2090 <= yr <= 2094: block = '2090s'
-    else:                    block = f'{yr}'   # 범위 밖이면 연도 그대로
+    else:                    block = f'{yr}'   
 
     label = f'{scen}_{block}'
     return {'scenario': scen, 'year': yr, 'block': block,
@@ -175,14 +149,14 @@ def parse_famy(f):
 
 def parse_ftmy(f):
     """
-    C:/.../FTMY/required/RCP8.5/Seattle/fTMY_Washington_King_B5303301_1980_1999.epw
-    → scenario='RCP8.5' (폴더에서), period='1980_1999'
+    fTMY_Washington_King_B5303301_1980_1999.epw
+    → scenario='RCP8.5' folder, period='1980_1999'
     """
     nm    = os.path.basename(f).replace('.epw', '')
     parts = nm.split('_')
     years = [p for p in parts if p.isdigit() and len(p) == 4]
     period = '_'.join(years) if len(years) >= 2 else 'unknown'
-    # 폴더 경로에서 RCP 추출 (RCP로 시작하는 폴더명)
+    
     rcp   = next((part for part in Path(f).parts
                   if part.startswith('RCP')), ftmy_scenario)
     key   = (rcp, period)
@@ -209,16 +183,16 @@ def parse_ftmy_direct(f):
 
 
 
-# ── Baseline 로드 ─────────────────────────────────────────────────────
+# Baseline TMYx load
 base_epw = glob.glob(str(Path(base_epw_dir) / '*.epw'))
 if not base_epw:
-    raise FileNotFoundError(f'Baseline EPW 없음: {base_epw_dir}')
+    raise FileNotFoundError(f'Baseline EPW not exist: {base_epw_dir}')
 base_epw = base_epw[0]
 df_base  = conv_epw(base_epw)
 print(f'\nBaseline: {os.path.basename(base_epw)}')
 
 
-# ── 비교 파일 로드 (모드별) ───────────────────────────────────────────
+# load future weather files
 if COMPARE_MODE == 'mews':
     epw_list = glob.glob(str(Path(mews_dir) / '*.epw'))
     parser   = parse_mews
@@ -230,7 +204,6 @@ elif COMPARE_MODE == 'famy':
     mode_label = 'fAMY'
 
 elif COMPARE_MODE == 'ftmy':
-    # ── 기존 코드 (required/RCP8.5/ 경로) ──────────────── 기존 유지
     ftmy_dir  = ftmy_base + f'{ftmy_scenario}/{test_loc}/'
     epw_list  = glob.glob(str(Path(ftmy_dir) / '*.epw'))
     epw_list += glob.glob(str(Path(ftmy_dir) / '**' / '*.epw'), recursive=True)
@@ -239,71 +212,58 @@ elif COMPARE_MODE == 'ftmy':
     parser     = parse_ftmy
     mode_label = 'fTMY'
 
-# =============================================================================
-#     # ── 신규: 직접 생성 fTMY (FTMY/{city}/) ─────────────────── 추가
-#     if not epw_list and os.path.exists(ftmy_direct_dir):
-#         epw_list = sorted(glob.glob(str(Path(ftmy_direct_dir) / '*.epw')))
-#         parser     = parse_ftmy_direct
-#         mode_label = 'fTMY (Generated, {ftmy_scenario})'
-#         print(f'직접 생성 fTMY 사용: {ftmy_direct_dir} ({len(epw_list)}개)')
-# =============================================================================
+
 
     if not epw_list:
         raise FileNotFoundError(
-            f'fTMY EPW 파일 없음:\n'
-            f'  기존 경로: {ftmy_dir}\n'
-            f'  신규 경로: {ftmy_direct_dir}')
+            f'fTMY EPW not exist:\n')
 
 elif COMPARE_MODE == 'ftmy_direct':
-    # 직접 생성 fTMY (FTMY/{city}/)
+    # software generated fTMY (FTMY/{city}/)
     if not os.path.exists(ftmy_direct_dir):
         raise FileNotFoundError(
-            f'fTMY Direct 폴더 없음: {ftmy_direct_dir}')
+            f'fTMY Direct directory not exist: {ftmy_direct_dir}')
     epw_list = sorted(glob.glob(str(Path(ftmy_direct_dir) / '*.epw')))
     if not epw_list:
         raise FileNotFoundError(
-            f'fTMY Direct EPW 파일 없음: {ftmy_direct_dir}')
+            f'fTMY Direct EPW file not exist: {ftmy_direct_dir}')
     parser     = parse_ftmy_direct
     mode_label = 'fTMY'
-    print(f'직접 생성 fTMY: {ftmy_direct_dir} ({len(epw_list)}개)')
+    print(f'software generated fTMY: {ftmy_direct_dir} ({len(epw_list)}개)')
 
 else:
-    raise ValueError(f"COMPARE_MODE는 'mews'|'famy'|'ftmy' 중 하나여야 해요: {COMPARE_MODE}")
+    raise ValueError(f"not exist: {COMPARE_MODE}")
 
 if not epw_list:
-    raise FileNotFoundError(f'{mode_label} EPW 파일 없음: '
+    raise FileNotFoundError(f'{mode_label} EPW not exist: '
                             f'{mews_dir if COMPARE_MODE=="mews" else famy_dir if COMPARE_MODE=="famy" else ftmy_dir}')
 
-# 파싱 + 로드
+# parsing and loading
 file_meta = []
-print(f'\n{mode_label} 파일 파싱 중...')
 for f in sorted(epw_list):
     try:
         meta = parser(f)
         meta['df'] = conv_epw(f)
         file_meta.append(meta)
     except Exception as e:
-        print(f'  ⚠ 건너뜀: {os.path.basename(f)} → {e}')
+        print(f'pass')
 
 
 
-
-# ────────────────────────────────────────────────────────────────────
-
-# 그룹핑
+# group
 scen_groups = {}
 for m in file_meta:
     scen_groups.setdefault(m['group_key'], []).append(m['df'])
 scen_keys = sorted(scen_groups.keys())
 
-print(f'\n{mode_label} EPW: {len(file_meta)}개, {len(scen_keys)}개 그룹')
+print(f'\n{mode_label} EPW: {len(file_meta)} files, {len(scen_keys)} groups')
 for key in scen_keys:
     lbl = file_meta[next(i for i,m in enumerate(file_meta) if m['group_key']==key)]['label']
-    print(f'  {lbl:20s}: {len(scen_groups[key])}개')
+    print(f'  {lbl:20s}: {len(scen_groups[key])} files')
 
 
 
-# ── ΔT 추출 ──────────────────────────────────────────────────────────
+# delta T calculation
 def get_daily(df):
     d = df[COL].resample('1D').agg(['max','min'])
     d.columns = ['TMAX','TMIN']
@@ -343,15 +303,14 @@ hist_dT_cs  = extract_dT(df_base, thresh, 'cs')
 comp_dT_hw  = [extract_dT(m['df'], thresh, 'hw') for m in file_meta]
 comp_dT_cs  = [extract_dT(m['df'], thresh, 'cs') for m in file_meta]
 
-print('\nBaseline 월별 극한일 수 (HW / CS):')
+print('\nBaseline number of extreme event days (HW / CS):')
 for m in range(1, 13):
     nh = len(hist_dT_hw[m]); nc = len(hist_dT_cs[m])
     print(f"  {MONTH_LABELS[m-1]:>4}: HW={nh:2d}  CS={nc:2d}  "
-          f"{'✓' if nh>=3 and nc>=3 else '⚠ 부족(<3)'}")
+          f"{'sufficient days' if nh>=3 and nc>=3 else 'less than 3 days (<3)'}")
 
 
-# ── KS test ──────────────────────────────────────────────────────────
-# group_key → label 매핑
+# KS test
 key_to_label = {}
 for m in file_meta:
     key_to_label[m['group_key']] = m['label']
@@ -380,7 +339,7 @@ def compute_ks(hist_dT, comp_dT_list, fm_list):
 
     df_pass = pval > 0.05
     tv = pval.notna().sum().sum(); tp = (pval>0.05).sum().sum()
-    print(f'  Pass: {tp}/{tv} ({tp/tv*100:.1f}%)' if tv>0 else '  데이터 없음')
+    print(f'  Pass: {tp}/{tv} ({tp/tv*100:.1f}%)' if tv>0 else '  no data')
     return pval, kst, df_pass
 
 print('\n[HW ΔT KS]'); pval_hw, ks_hw, pass_hw = compute_ks(hist_dT_hw, comp_dT_hw, file_meta)
@@ -391,21 +350,21 @@ n_scen     = len(scen_cols)
 
 
 
-# 각 파일의 총 시간 수, Month/Day 시퀀스에 빠지거나 중복된 날짜가 있는지 확인
+# check duplication
 def diagnose_leap(df, label):
     n = len(df)
     md = df[['Month','Day']].drop_duplicates()
     n_days = len(md)
     expected_days = 366 if n == 8784 else 365
-    print(f'{label:25s}  시간수={n:5d}  날짜수={n_days:3d}  '
-          f'{"OK" if n_days==expected_days else "⚠ 날짜 수 이상"}')
-    # 순서상 비어있는 날짜(월-일) 찾기
+    print(f'{label:25s}  times={n:5d}  days={n_days:3d}  '
+          f'{"OK" if n_days==expected_days else "failure"}')
+    # check empty days
     full_365 = pd.date_range('2003-01-01','2003-12-31',freq='D')
     have = pd.to_datetime(dict(year=2003, month=md['Month'], day=md['Day']),
                           errors='coerce')
     missing = full_365.difference(have.dropna())
     if len(missing) > 0 and n != 8784:
-        print(f'   → 빠진 날짜(월-일 기준): {[d.strftime("%m-%d") for d in missing]}')
+        print(f'missed days: {[d.strftime("%m-%d") for d in missing]}')
 
 diagnose_leap(df_base, 'Baseline')
 for key, dfs in scen_groups.items():
@@ -414,36 +373,7 @@ for key, dfs in scen_groups.items():
 
 
 
-# ── ★ Stochastic EPW 기반 최적 Event Window 자동 선정 ────────────────
-# NOAA 역사 최극값 기반 초기값을 override
-# SSP585 or 가장 극단적 미래 시나리오 파일 기준으로 ΔT 최대 구간 탐색
-
-# =============================================================================
-# def find_optimal_event_window(df_base, stoch_dfs, event_type='hw',
-#                                window_days=5, top_n=1):
-#     base_daily = df_base[COL].resample('1D').agg(['max','min'])
-#     base_daily.columns = ['TMAX','TMIN']
-# 
-#     stoch_vals = np.array([
-#         df[COL].resample('1D').agg(['max','min']).values
-#         for df in stoch_dfs
-#     ])
-#     stoch_mean = pd.DataFrame(
-#         stoch_vals.mean(axis=0),
-#         index=base_daily.index,
-#         columns=['TMAX','TMIN'])
-# 
-#     delta = (stoch_mean['TMAX'] - base_daily['TMAX'] if event_type == 'hw'
-#              else base_daily['TMIN'] - stoch_mean['TMIN'])
-# 
-#     rolling = delta.rolling(window=window_days, center=True).mean()
-#     best    = rolling.idxmax() if event_type == 'hw' else rolling.idxmin()
-# 
-#     start = pd.Timestamp(2004, best.month, best.day) - pd.Timedelta(days=window_days//2)
-#     end   = start + pd.Timedelta(days=window_days)
-#     return start, end
-# 
-# =============================================================================
+# Event window selection
 def find_optimal_event_window(df_base, stoch_dfs, event_type='hw',
                                window_days=5, top_n=1):
     base_daily = df_base[COL].resample('1D').agg(['max','min'])
@@ -464,14 +394,14 @@ def find_optimal_event_window(df_base, stoch_dfs, event_type='hw',
              else stoch_mean['TMIN'] - base_daily['TMIN'])
 
     rolling = delta.rolling(window=window_days, center=True).mean()
-    # 계절 제한 추가
+    # limit seasons
     if event_type == 'hw':
-        # HW: 6~9월만 탐색
+        # HW: Jun-Sep
         rolling = rolling.copy()
         mask = ~rolling.index.month.isin([6, 7, 8, 9])
         rolling[mask] = np.nan
     else:
-        # CS: 11~2월만 탐색 (겨울 한정)
+        # CS: Nov-Feb
         rolling = rolling.copy()
         mask = ~rolling.index.month.isin([12, 1, 2])
         rolling[mask] = np.nan
@@ -481,13 +411,13 @@ def find_optimal_event_window(df_base, stoch_dfs, event_type='hw',
     end   = start + pd.Timedelta(days=window_days)
     return start, end
 
-# 가장 극단적 미래 시나리오 파일 선택 (SSP585 or 마지막 그룹)
+# choose the most extreme scenario
 extreme_key  = max(scen_groups.keys(),
                    key=lambda k: ('SSP585' in str(k) or 'RCP8.5' in str(k),
                                   k[1] if isinstance(k[1], int) else 0))
 extreme_dfs  = scen_groups[extreme_key]
 
-# 파일이 있으면 자동 선정, 없으면 역사 최극값 기반 유지
+
 if extreme_dfs:
     HW_START, HW_END = find_optimal_event_window(df_base, extreme_dfs, 'hw')
     CS_START, CS_END = find_optimal_event_window(df_base, extreme_dfs, 'cs')
@@ -496,17 +426,16 @@ if extreme_dfs:
     print(f'  CS: {CS_START.date()} ~ {CS_END.date()}')
 
 
-# 레이블별 색상 사전 — 팔레트 매칭 실패 시 matplotlib 기본 색상 cycle 사용
+# color label
 import matplotlib as mpl
 _default_colors = [p['color'] for p in mpl.rcParams['axes.prop_cycle']]
 
-# 같은 RCP 시나리오 내 4단계 밝기 구분
-# decade 블록별 고정 색상 (연대가 늦을수록 따뜻한 색)
+
 DECADE_COLORS = {
-    '2040s': '#2196F3',   # 파랑  — 근미래
-    '2050s': '#4CAF50',   # 초록  — 중기
-    '2080s': '#FF9800',   # 주황  — 원미래
-    '2090s': '#F44336',   # 빨강  — 말기
+    '2040s': '#2196F3',   # blue 
+    '2050s': '#4CAF50',   # green
+    '2080s': '#FF9800',   # orange
+    '2090s': '#F44336',   # red
 }
 
 
@@ -515,9 +444,9 @@ def build_label_colors(labels):
     import matplotlib.colors as mc
     color_map = {}
     dc_idx = 0
-    p_pat  = re.compile(r'_(\d{4})_(\d{4})$')   # fTMY 기간 패턴
+    p_pat  = re.compile(r'_(\d{4})_(\d{4})$')   # fTMY pattern
 
-    # fTMY: coolwarm 그라데이션 (시작연도 기준)
+    # fTMY: coolwarm gradient
     ftmy_lbls = [(lbl, int(p_pat.search(str(lbl)).group(1)))
                  for lbl in labels if p_pat.search(str(lbl))]
     if ftmy_lbls:
@@ -527,44 +456,44 @@ def build_label_colors(labels):
         for i, (lbl, _) in enumerate(ftmy_sorted):
             color_map[lbl] = cm_(i / max(n - 1, 1))
 
-    # 나머지 (fAMY decade, MEWS, SSP/RCP 팔레트)
+    # others
     for lbl in labels:
         if lbl in color_map:
             continue
         s = str(lbl)
-        # decade 블록 직접 ('RCP8.5_2040s', 'SSP245_2020')
+       
         decade = next((d for d in DECADE_COLORS if d in s), None)
         if decade:
             color_map[lbl] = DECADE_COLORS[decade]; continue
-        # 개별 연도 → decade 매핑 ('RCP8.5_2045')
+       
         yr_m = re.search(r'_(\d{4})$', s)
         if yr_m:
             dk = get_decade(int(yr_m.group(1)))
             if dk:
                 color_map[lbl] = DECADE_COLORS[dk]; continue
-        # SSP/RCP 팔레트 fallback
+        # SSP/RCP palette
         matched = next((c for k, c in scenario_palette.items() if k in s), None)
         color_map[lbl] = matched if matched else _default_colors[dc_idx % len(_default_colors)]
         if not matched: dc_idx += 1
 
     return color_map
-# decade별 dark→light 그라데이션 정의 (earlier=dark, later=light)
+# define color gradient (earlier=dark, later=light)
 DECADE_GRADIENT = {
-    '2040s': ('#0D47A1', '#90CAF9'),   # 진한파랑 → 연한파랑
-    '2050s': ('#1B5E20', '#A5D6A7'),   # 진한초록 → 연한초록
-    '2080s': ('#E65100', '#FFCC80'),   # 진한주황 → 연한주황
-    '2090s': ('#B71C1C', '#EF9A9A'),   # 진한빨강 → 연한빨강
+    '2040s': ('#0D47A1', '#90CAF9'),   # blue
+    '2050s': ('#1B5E20', '#A5D6A7'),   # green
+    '2080s': ('#E65100', '#FFCC80'),   # orange
+    '2090s': ('#B71C1C', '#EF9A9A'),   # red
 }
 
-# decade별 마커 모양
+# define marker shape
 DECADE_MARKERS = {
-    '2040s': 'o',   # 원
-    '2050s': 's',   # 사각형
-    '2080s': '^',   # 삼각형
-    '2090s': 'D',   # 다이아몬드
+    '2040s': 'o',   # circle
+    '2050s': 's',   # square
+    '2080s': '^',   # triangle
+    '2090s': 'D',   # diamond
 }
 
-# fTMY 기간별 마커 (기간 순서대로 할당)
+# fTMY marker shape
 FTMY_MARKERS = ['o', 's', '^', 'D', 'v', 'P']
 
 DECADE_RANGES = {
@@ -581,22 +510,17 @@ def get_decade(yr):
     return None
 
 def build_gradient_colors(labels):
-    """
-    fAMY 개별 연도 (RCP8.5_2045)      → decade 내 dark→light 그라데이션
-    fTMY 기간 레이블 (RCP8.5_1980_1999) → coolwarm 그라데이션
-    MEWS/decade 그룹 레이블 (SSP245_2020, RCP8.5_2040s) → 고정색
-    """
     import matplotlib.colors as mc
     color_map = {}
     dc_idx    = 0
 
-    p_pat = re.compile(r'_(\d{4})_(\d{4})$')   # fTMY 기간 패턴
-    y_pat = re.compile(r'_(\d{4})$')             # fAMY 개별 연도 패턴
+    p_pat = re.compile(r'_(\d{4})_(\d{4})$')   # fTMY 
+    y_pat = re.compile(r'_(\d{4})$')             # fAMY
 
-    # ── Step 1: 레이블 분류 ──────────────────────────────────────────
-    ftmy_lbls      = []          # fTMY 기간 레이블
-    famy_by_decade = {}          # decade 별로 묶인 fAMY 개별 연도
-    other_lbls     = []          # MEWS 그룹, decade 블록, 범위 외
+    # classify labels
+    ftmy_lbls      = []          # fTMY 
+    famy_by_decade = {}          # fAMY
+    other_lbls     = []          # MEWS and others
 
     for lbl in labels:
         s = str(lbl)
@@ -608,14 +532,14 @@ def build_gradient_colors(labels):
             yr = int(y_pat.search(s).group(1))
             dk = get_decade(yr)
             if dk:
-                # fAMY 개별 연도: decade 그룹으로 분류
+                # fAMY 
                 famy_by_decade.setdefault(dk, []).append((yr, lbl))
             else:
                 other_lbls.append(lbl)
         else:
             other_lbls.append(lbl)
 
-    # ── Step 2: fTMY → coolwarm 그라데이션 ──────────────────────────
+    # fTMY color codes
     if ftmy_lbls:
         ftmy_sorted = sorted(ftmy_lbls, key=lambda x: x[1])
         n   = len(ftmy_sorted)
@@ -623,28 +547,28 @@ def build_gradient_colors(labels):
         for i, (lbl, _) in enumerate(ftmy_sorted):
             color_map[lbl] = cm_(i / max(n - 1, 1))
 
-    # ── Step 3: fAMY → decade 내 dark→light 그라데이션 ──────────────
+    # fAMY color codes
     for dk, yr_lbls in famy_by_decade.items():
-        yr_lbls_sorted = sorted(yr_lbls)          # 연도 오름차순
+        yr_lbls_sorted = sorted(yr_lbls)          
         n          = len(yr_lbls_sorted)
         dark_rgb   = mc.to_rgb(DECADE_GRADIENT[dk][0])
         light_rgb  = mc.to_rgb(DECADE_GRADIENT[dk][1])
         for i, (yr, lbl) in enumerate(yr_lbls_sorted):
-            t = i / max(n - 1, 1)                 # 0=진함(earliest) → 1=연함
+            t = i / max(n - 1, 1)                 
             color_map[lbl] = tuple(
                 dark_rgb[c] + t * (light_rgb[c] - dark_rgb[c])
                 for c in range(3))
 
-    # ── Step 4: 나머지 (MEWS 그룹, decade 블록, 범위 외) ────────────
+    # color codes for others
     for lbl in other_lbls:
         if lbl in color_map:
             continue
         s = str(lbl)
-        # decade 블록 직접 ('2040s' in 'RCP8.5_2040s')
+        
         decade = next((d for d in DECADE_COLORS if d in s), None)
         if decade:
             color_map[lbl] = DECADE_COLORS[decade]; continue
-        # SSP/RCP 팔레트
+        # SSP/RCP palette
         matched = next((c for k, c in scenario_palette.items() if k in s), None)
         color_map[lbl] = matched if matched else _default_colors[dc_idx % len(_default_colors)]
         if not matched: dc_idx += 1
@@ -652,12 +576,12 @@ def build_gradient_colors(labels):
     return color_map
 
 label_colors = build_label_colors(scen_cols)
-print('레이블-색상 매핑:')
+print('label-color mapping:')
 for lbl, clr in label_colors.items():
     print(f'  {lbl}: {clr}')
 
 
-# ── 추가 검증 ─────────────────────────────────────────────────────────
+# extra statistical test
 def window(df, s, e): return df.loc[s:e, COL]
 
 def run_stats(na, a, nb, b):
@@ -688,7 +612,6 @@ peak = {key: np.mean([get_daily(df)['TMAX'].max() for df in dfs])
         for key, dfs in scen_groups.items()}
 
 # Return period
-# ── Return period / 관측 최대값 ─────────────────────────────────────
 rp_rows = []
 for key, dfs in scen_groups.items():
     maxes = np.array([get_daily(df)['TMAX'].max() for df in dfs])
@@ -698,7 +621,7 @@ for key, dfs in scen_groups.items():
     yr  = key[1] if isinstance(key[1], int) else 0
 
     if len(maxes) >= 3:
-        # Gumbel fit 가능 (MEWS 다수 realization)
+        # Gumbel fit (multiple realizations)
         try:
             lg, sg = gumbel_r.fit(maxes)
             for rp in [10, 50]:
@@ -708,7 +631,7 @@ for key, dfs in scen_groups.items():
         except Exception:
             pass
     else:
-        # 단일 파일 (fAMY/fTMY): 관측 최대값 직접 사용
+        # single realization (use observed maximum)
         rp_rows.append({'Label': lbl, 'Year': yr,
                         'Return Period': 'obs_max',
                         'Est. TMAX (°C)': round(float(maxes.mean()), 1)})
@@ -716,24 +639,24 @@ for key, dfs in scen_groups.items():
 df_rp = pd.DataFrame(rp_rows)
 
 
-# ── Ensemble 일관성 (realization 2개 이상일 때만) ──────────────────
+# Ensemble consistency (only for multiple realizations)
 con_rows = []
 for key, dfs in scen_groups.items():
     if len(dfs) < 2:
-        continue   # fTMY/fAMY (단일 파일) skip
+        continue   # fTMY/fAMY (single realizations) skip
     pp = [stats.ks_2samp(window(d1, HW_START, HW_END).values,
                          window(d2, HW_START, HW_END).values)[1]
           for d1, d2 in combinations(dfs, 2)]
     con_rows.append({'Label'        : key_to_label[key],
                      'Consistent(%)': round(np.mean(np.array(pp) > 0.05) * 100, 1),
                      'Mean KS p'    : round(np.mean(pp), 4)})
-df_con = pd.DataFrame(con_rows)   # realization 없으면 빈 DataFrame
+df_con = pd.DataFrame(con_rows)   # empty if no realization
 
 if not df_con.empty:
-    print('\n[Ensemble 일관성]')
+    print('\n[Ensemble consistency]')
     print(df_con.to_string(index=False))
 else:
-    print(f'\n[Ensemble 일관성] skip ({mode_label}: realization 1개)')
+    print(f'\n[Ensemble consistency] skip ({mode_label}: single realization)')
 
 
 #%% Figures
@@ -771,47 +694,7 @@ for key, dfs in sorted(scen_groups.items()):
                     color=clr, alpha=0.15)
     ax.plot(base_daily_mean.index, np.nanmean(daily_means, axis=0),
             color=clr, lw=1.0, label=lbl)
-# =============================================================================
-# 
-# # ── 시나리오별 절대(hourly) 최고/최저 지점 찾기 (baseline 제외) ─────
-# abs_max = {'val': -np.inf}
-# abs_min = {'val':  np.inf}
-# 
-# for key, dfs in sorted(scen_groups.items()):
-#     lbl = key_to_label[key]
-#     clr = label_colors.get(lbl)
-#     for df in dfs:
-#         s = df[COL]
-#         i_max, i_min = s.idxmax(), s.idxmin()
-#         if s.loc[i_max] > abs_max['val']:
-#             abs_max = {'val': s.loc[i_max], 'date': i_max, 'label': lbl, 'color': clr}
-#         if s.loc[i_min] < abs_min['val']:
-#             abs_min = {'val': s.loc[i_min], 'date': i_min, 'label': lbl, 'color': clr}
-#     abs_max['color'] = abs_max['color'] if abs_max['color'] else 'black'
-#     abs_min['color'] = abs_min['color'] if abs_min['color'] else 'black'
-# print('MAX:', abs_max)
-# print('MIN:', abs_min)
-# 
-# # ── 화살표 주석 ───────────────────────────────────────────────────────
-# ax.annotate(
-#     f"{abs_max['label']}\n{abs_max['val']:.1f}°C ({abs_max['date'].strftime('%m-%d')})",
-#     xy=(abs_max['date'], abs_max['val']),
-#     xytext=(30, 20), textcoords='offset points',
-#     fontsize=8, fontweight='bold', color='black',
-#     arrowprops=dict(arrowstyle='->', color='black', lw=1.3),
-#     zorder=15, annotation_clip=False)
-# 
-# ax.annotate(
-#     f"{abs_min['label']}\n{abs_min['val']:.1f}°C ({abs_min['date'].strftime('%m-%d')})",
-#     xy=(abs_min['date'], abs_min['val']),
-#     xytext=(30, -25), textcoords='offset points',
-#     fontsize=8, fontweight='bold', color='black',
-#     arrowprops=dict(arrowstyle='->', color='black', lw=1.3),
-#     zorder=15, annotation_clip=False)
-# 
-# =============================================================================
-# ax.axvspan(HW_START, HW_END, color='orange', alpha=0.12, label='HW window')
-# ax.axvspan(CS_START, CS_END, color='skyblue', alpha=0.15, label='CS window')
+
 ax.set_title(f'Annual Daily-Mean Temperature', fontsize=subtitle_size)
 ax.set_ylabel('Dry Bulb Temperature [°C]', fontsize=axis_font_size)
 ax.tick_params(axis='both', labelsize=tick_size)
@@ -822,7 +705,7 @@ ax.legend(fontsize=legend_size, ncol=3,
           framealpha=0.8)
 ax.grid(alpha=0.3)
 
-# ── 시나리오별: 실선(daily-mean 평균) + 음영(실제 TMAX/TMIN 전체 범위) ─
+# daily mean and min-max range
 scen_mean_series = {}
 scen_range = {}
 
@@ -830,18 +713,18 @@ for key, dfs in sorted(scen_groups.items()):
     clr = label_colors.get(key_to_label[key])
     lbl = key_to_label[key]
 
-    # 실선: 기존과 동일 — realization들의 daily-mean을 평균
+    # solid line: daily mean
     daily_means = np.array(
         [df[COL].resample('1D').mean().reindex(base_daily_mean.index).values
          for df in dfs], dtype=float)
     mean_line = pd.Series(np.nanmean(daily_means, axis=0), index=base_daily_mean.index)
 
-    # 음영: daily-mean의 범위가 아니라, 모든 realization의 실제 TMAX/TMIN 범위
-    daily_list = [get_daily(df) for df in dfs]   # 각 realization의 daily TMAX/TMIN
+    # shade: actual temperature value of all realizations
+    daily_list = [get_daily(df) for df in dfs]   # daily TMAX/TMIN of each realizations
     tmax_all = pd.concat([d['TMAX'] for d in daily_list], axis=1).reindex(base_daily_mean.index)
     tmin_all = pd.concat([d['TMIN'] for d in daily_list], axis=1).reindex(base_daily_mean.index)
-    range_max = tmax_all.max(axis=1)   # 그날 여러 realization 중 가장 더웠던 순간(TMAX)의 최댓값
-    range_min = tmin_all.min(axis=1)   # 그날 여러 realization 중 가장 추웠던 순간(TMIN)의 최솟값
+    range_max = tmax_all.max(axis=1)   
+    range_min = tmin_all.min(axis=1)   
 
     scen_mean_series[key] = mean_line
     scen_range[key] = {'max': range_max, 'min': range_min}
@@ -865,7 +748,7 @@ cs_info = {'val': cs_series.loc[cs_idx], 'date': cs_idx, 'label': key_to_label[c
 
 
 y_min, y_max = ax.get_ylim()
-margin = (y_max - y_min) * 0.12   # 위아래 12% 여유
+margin = (y_max - y_min) * 0.12   
 ax.set_ylim(y_min - margin, y_max + margin)
 
 y_hw = 0.96 
@@ -1054,7 +937,7 @@ else:
                color=all_colors_indiv.get(lbl, '#2194FC'),
                alpha=0.85, edgecolor='black', lw=0.5)
 
-    # ── famy: 전체 추세선 (연도 경과에 따른 선형 추세) ──────────────
+    # ── famy trend line
     if COMPARE_MODE == 'famy' and len(labels_sorted) >= 2:
         trend_x = np.arange(len(labels_sorted))
         trend_y = [file_peaks_indiv[lbl] for lbl in labels_sorted]
@@ -1126,7 +1009,7 @@ if not df_rp.empty or file_meta:
         is_ftmy = len(period_lbls) > 0
 
         if is_ftmy:
-            # fTMY: 기간별 고유 색상(coolwarm) 바 차트
+            # fTMY: separate color palette
             ftmy_sorted = sorted(period_lbls, key=lambda x: x[1])
             import matplotlib.patches as mpatches
             legend_handles = []
@@ -1148,7 +1031,7 @@ if not df_rp.empty or file_meta:
             ax.legend(handles=legend_handles, fontsize=7)
 
         else:
-            # fAMY: 단일 색상 바 차트 + 추세선
+            # fAMY: single color bar chart and trend line
             plotted_labels = set()
             delta_vals = []
             for lbl in labels_sorted:
@@ -1159,7 +1042,7 @@ if not df_rp.empty or file_meta:
                        zorder=3, edgecolor='black', lw=0.5)
                 delta_vals.append(delta_val)
 
-            # ── famy: 전체 추세선 (연도 경과에 따른 선형 추세) ──────
+            # ── famy: entire trend line
             if COMPARE_MODE == 'famy' and len(labels_sorted) >= 2:
                 trend_x = np.arange(len(labels_sorted))
                 z = np.polyfit(trend_x, delta_vals, 1)
@@ -1199,7 +1082,7 @@ else:
                   transform=axes3[1].transAxes, fontsize=12)
 
 
-# Return period용 Year 컬럼 추가 (MEWS에서 필요)
+# Return period (MEWS)
 
 df_rp = pd.DataFrame(rp_rows) if rp_rows else pd.DataFrame(
     columns=['Label','Return Period','Estimated TMAX (°C)'])
@@ -1221,10 +1104,8 @@ df_rp.to_csv(result_dir+'return_period.csv',         index=False)
 if not df_con.empty:
     df_con.to_csv(result_dir+'ensemble_consistency.csv', index=False)
 
-# ── ΔT KS test 전체 결과 요약 테이블 (Fig2 히트맵 정보를 표로 통합) ────
+# ΔT KS test summary table
 def build_ks_summary_table(pval_df, ks_df, event_label):
-    """월×시나리오 매트릭스(pval, KS stat)를 long-format 테이블로 변환.
-       classification: p>0.05 → Normal, p<=0.05 → Extreme, NaN → N/A"""
     rows = []
     for col in pval_df.columns:
         for m in range(1, 13):
@@ -1254,9 +1135,9 @@ df_ks_summary = pd.concat([
 
 df_ks_summary.to_csv(result_dir + 'deltaT_ks_test_summary.csv', index=False)
 
-# ── (참고용) 시나리오별 요약 — 계절 내 Extreme 비율 ────────────────────
-SUMMER_MONTHS = [6, 7, 8, 9]      # HW 물리적으로 기대되는 계절
-WINTER_MONTHS = [12, 1, 2]        # CS 물리적으로 기대되는 계절
+# summary by scenario: extreme event counts
+SUMMER_MONTHS = [6, 7, 8, 9]      # HW 
+WINTER_MONTHS = [12, 1, 2]        # CS 
 
 def summarize_scenario_pass(df_summary, event_label, target_months):
     sub = df_summary[(df_summary['Event Type'] == event_label) &
@@ -1290,39 +1171,38 @@ tick_size = 12
 
 if COMPARE_MODE == 'ftmy_direct':
 
-    # ── 색상/마커 설정 ────────────────────────────────────────────────
-    # SSP 시나리오 순서 (약함 → 강함)
+    # color and marker selection
     SSP_ORDER = ['SSP126', 'SSP245', 'SSP370', 'SSP585']
 
-    # 연도별 색상 패밀리 (시나리오 강도에 따라 연→진)
+    # year color palettes
     YEAR_COLORS = {
-        2050: ['#90CAF9', '#42A5F5', '#1E88E5', '#1565C0'],  # 파랑 (연→진)
-        2080: ['#EF9A9A', '#EF5350', '#E53935', '#B71C1C'],  # 빨강 (연→진)
+        2050: ['#90CAF9', '#42A5F5', '#1E88E5', '#1565C0'],  # blue
+        2080: ['#EF9A9A', '#EF5350', '#E53935', '#B71C1C'],  # red
     }
-    # 연도별 마커 모양 (2050=원, 2080=삼각형)
+    # year markers
     YEAR_MARKERS = {2050: 'o', 2080: '^'}
 
     years_avail = sorted({y for s, y in scen_groups.keys()})
     n_ssp = len(SSP_ORDER)
     n_yr  = len(years_avail)
 
-    # ── peak 계산 (존재하는 그룹만) ──────────────────────────────────
+    # calculate peak 
     peak_direct = {}
     for (s, y), dfs in scen_groups.items():
-        # 팔레트 키와 매칭 (SSP126, SSP245 등)
+        
         ssp_key = next((k for k in SSP_ORDER if k in str(s).upper()), None)
         if ssp_key:
             peak_direct[(ssp_key, y)] = np.mean(
                 [get_daily(df)['TMAX'].max() for df in dfs])
 
-    # ── Figure 생성 ──────────────────────────────────────────────────
+    # figure
     fig3d, axes3d = plt.subplots(1, 2, figsize=(14, 5), dpi=300)
     fig3d.suptitle(
         f'Scenario Analysis: {test_loc}  [{mode_label}]\n'
         '(Categorized by year and scenario)',
         fontsize= suptitle_size, fontweight='bold')
 
-    # ── (좌) 바차트: 연도별 묶음, 시나리오(SSP) 색상, x축에 시나리오 표시 ─
+    
     ax   = axes3d[0]
     import matplotlib.patches as mpatches
 
@@ -1342,7 +1222,7 @@ if COMPARE_MODE == 'ftmy_direct':
             trend_x.append(bar_counter)
             trend_y.append(val)
             bar_counter += 1
-        # ── 연도별 추세선 ────────────────────────────────────────────
+        # trend line
         if len(trend_x) >= 2:
             z = np.polyfit(trend_x, trend_y, 1)
             tx = np.linspace(min(trend_x), max(trend_x), 50)
@@ -1358,7 +1238,7 @@ if COMPARE_MODE == 'ftmy_direct':
     ax.set_title('Mean Annual Peak Temperature\n(grouped by year, colored by scenario intensity)', fontsize= subtitle_size)
     ax.grid(alpha=0.3, axis='y')
 
-    # 범례 — 연도별 색상 + 추세선 + baseline
+    
     legend_handles = []
     for yr in years_avail:
         clr_list = YEAR_COLORS.get(yr, ['#888888'] * n_ssp)
@@ -1374,7 +1254,7 @@ if COMPARE_MODE == 'ftmy_direct':
                    label=f'Baseline (TMYx, {base_tmax_max:.1f}°C)'))
     ax.legend(handles=legend_handles, fontsize=legend_size)
 
-    # ── (우) 바차트: baseline 대비 ΔPeak, 연도별 색상 강도 유지 ─────────
+    # delta peak bar chart
     ax = axes3d[1]
     import matplotlib.lines as mlines
     import matplotlib.patches as mpatches
@@ -1387,7 +1267,7 @@ if COMPARE_MODE == 'ftmy_direct':
             val = peak_direct.get((ssp, yr), None)
             if val is None:
                 continue
-            delta_val = val - base_tmax_max   # ← baseline 대비 변화량(ΔPeak)으로 표시
+            delta_val = val - base_tmax_max   
             lbl = f'{yr}' if ssp_idx == 0 else ''
             ax.bar([f'{ssp}\n{yr}'], [delta_val],
                    color=clr_list[ssp_idx],
@@ -1396,7 +1276,7 @@ if COMPARE_MODE == 'ftmy_direct':
             trend_x.append(bar_counter)
             trend_y.append(delta_val)
             bar_counter += 1
-        # ── 연도별 추세선 ────────────────────────────────────────────
+        # trend line
         if len(trend_x) >= 2:
             z = np.polyfit(trend_x, trend_y, 1)
             tx = np.linspace(min(trend_x), max(trend_x), 50)
@@ -1412,7 +1292,7 @@ if COMPARE_MODE == 'ftmy_direct':
     ax.set_title('Peak Temperature Increase vs. Baseline\n(grouped by year, colored by scenario intensity)', fontsize = subtitle_size)
     ax.grid(alpha=0.3, axis='y')
 
-    # 범례 — 연도별 색상 + baseline
+    
     legend_handles = []
     for yr in years_avail:
         clr_list = YEAR_COLORS.get(yr, ['#888888'] * n_ssp)
@@ -1433,14 +1313,14 @@ if COMPARE_MODE == 'ftmy_direct':
                 dpi=300, bbox_inches='tight')
     plt.show()
 
-#%% figure 5
+#%% figure 5 frequency plot
 
 
-# ── 1. TMYx 기반 90th/10th 임계값 계산 ───────────────────────────────
+# threshold calculation
 def compute_tmyx_extreme_thresh(df_base):
     """
-    TMYx baseline EPW 월별 90th/10th percentile 임계값
-    월별 pooling → 월당 28~31개 데이터로 안정적 추정
+    TMYx baseline EPW monthly 90th/10th percentile threshold
+    pooling by month
     """
     daily = get_daily(df_base)
     rows  = []
@@ -1457,7 +1337,7 @@ def compute_tmyx_extreme_thresh(df_base):
 
 def count_extreme_days(df_epw, tmyx_thresh, event_type='hw'):
     """
-    Villa et al. (2023) Section 2.2.1 정의 기반 극한 이벤트 일수 계산
+    Villa et al. (2023) Section 2.2.1 
 
     HW: TMAX > TMYx TMAX 90th percentile (hot daytime)
      OR TMIN > TMYx TMIN 90th percentile (hot nighttime)
@@ -1478,16 +1358,16 @@ def count_extreme_days(df_epw, tmyx_thresh, event_type='hw'):
     return int(extreme.sum())
 
 
-# ── 2. Baseline 임계값 + 기준값 계산 ────────────────────────────────
+# Baseline threshold calculation
 tmyx_thresh = compute_tmyx_extreme_thresh(df_base)
 baseline_hw = count_extreme_days(df_base, tmyx_thresh, 'hw')
 baseline_cs = count_extreme_days(df_base, tmyx_thresh, 'cs')
-print(f'Baseline (TMYx): HW={baseline_hw}일/년  CS={baseline_cs}일/년')
+print(f'Baseline (TMYx): HW={baseline_hw}day/year  CS={baseline_cs}day/year')
 
 
-# ── 3. 모드별 데이터 준비 ────────────────────────────────────────────
+
 if COMPARE_MODE == 'famy':
-    # fAMY: 개별 연도별 (Fig3 바차트와 동일 방식), 막대는 단일 색상으로 통일
+    # fAMY
     fm_sorted  = sorted(file_meta, key=lambda x: x['year'])
     labels_f   = [f"{m['scenario']}_{m['year']}" for m in fm_sorted]
     colors_f   = [FAMY_UNIFORM_COLOR] * len(labels_f)
@@ -1499,11 +1379,10 @@ if COMPARE_MODE == 'famy':
     cs_means, cs_stds = cs_vals, [0] * len(cs_vals)
     
 elif COMPARE_MODE == 'ftmy_direct':
-    # Fig3d(Observed Peak Temperature)와 동일한 팔레트: 연도(2050=블루/2080=레드) × SSP 강도(명→암)
     SSP_ORDER_F4 = ['SSP126', 'SSP245', 'SSP370', 'SSP585']
     YEAR_COLORS_F4 = {
-        2050: ['#90CAF9', '#42A5F5', '#1E88E5', '#1565C0'],   # 블루, 연→진 (126→585)
-        2080: ['#EF9A9A', '#EF5350', '#E53935', '#B71C1C'],   # 레드, 연→진 (126→585)
+        2050: ['#90CAF9', '#42A5F5', '#1E88E5', '#1565C0'],   # blue
+        2080: ['#EF9A9A', '#EF5350', '#E53935', '#B71C1C'],   # red
     }
 
     keys_sorted = sorted(
@@ -1532,7 +1411,7 @@ elif COMPARE_MODE == 'ftmy_direct':
         cs_means.append(np.mean(cs_c)); cs_stds.append(np.std(cs_c))
 
 else:
-    # MEWS / fTMY / ftmy_direct: scen_groups 기준 (평균 + 표준편차)
+    # MEWS / fTMY / ftmy_direct
     keys_sorted = sorted(scen_groups.keys())
     labels_f    = [key_to_label[k] for k in keys_sorted]
     colors_f    = [label_colors.get(lbl, '#607D8B') for lbl in labels_f]
@@ -1546,43 +1425,37 @@ else:
         hw_means.append(np.mean(hw_c)); hw_stds.append(np.std(hw_c))
         cs_means.append(np.mean(cs_c)); cs_stds.append(np.std(cs_c))
 
-# Baseline 대비 변화량 (Δ)
+# delta change
 delta_hw = [m - baseline_hw for m in hw_means]
 delta_cs = [m - baseline_cs for m in cs_means]
 
-# 콘솔 요약 출력
-print(f'\n{"시나리오":20s}  {"HW(일/년)":>10s}  {"ΔHW":>7s}  {"CS(일/년)":>10s}  {"ΔCS":>7s}')
+# results
+print(f'\n{"scenarios":20s}  {"HW(days/year)":>10s}  {"ΔHW":>7s}  {"CS(days/year)":>10s}  {"ΔCS":>7s}')
 print('─' * 60)
 for i, lbl in enumerate(labels_f):
-    print(f'{lbl:20s}  {hw_means[i]:>9.1f}일  '
-          f'{delta_hw[i]:>+6.1f}일  '
-          f'{cs_means[i]:>9.1f}일  '
-          f'{delta_cs[i]:>+6.1f}일')
+    print(f'{lbl:20s}  {hw_means[i]:>9.1f}days  '
+          f'{delta_hw[i]:>+6.1f}days  '
+          f'{cs_means[i]:>9.1f}days  '
+          f'{delta_cs[i]:>+6.1f}days')
 
 
-# ── 4. Figure 4 (2×2) ───────────────────────────────────────────────
+# Figure 4
 fig4, axes4 = plt.subplots(1, 2, figsize=(14, 5), dpi=300)
 fig4.suptitle(
     f'Extreme Event Frequency: {test_loc}  [{mode_label}]',
     fontsize= suptitle_size, fontweight='bold')
 
-# ── (0,0) HW 절대 발생 일수 ──────────────────────────────────────────
+# HW occurrence days
 ax = axes4[0]
 ax.bar(x_f, hw_means, color=colors_f, alpha=0.85, edgecolor='black', lw=0.5)
 if any(s > 0 for s in hw_stds):
     ax.errorbar(x_f, hw_means, yerr=hw_stds,
                 fmt='none', color='black', capsize=4, lw=1.2, zorder=5)
-# =============================================================================
-# if len(x_f) >= 2:
-#     z_hw = np.polyfit(x_f, hw_means, 1)
-#     ax.plot(x_f, np.poly1d(z_hw)(x_f), color='black', lw=1.5, ls='-.',
-#             zorder=6, label='Trend (linear)')
-# =============================================================================
 
 
 if len(x_f) >= 2:
     if COMPARE_MODE == 'ftmy_direct':
-        # ── 연도별 추세선 ────────────────────────────────────────────
+        # trend line
         for yr in sorted(set(years_f4)):
             idx = [i for i, y in enumerate(years_f4) if y == yr]
             if len(idx) < 2:
@@ -1609,21 +1482,16 @@ ax.set_title('Heat Wave', fontsize = subtitle_size)
 ax.legend(fontsize=legend_size)
 ax.grid(alpha=0.3, axis='y')
         
-# ── (0,1) CS 절대 발생 일수 ──────────────────────────────────────────
+# CS occurrence
 ax = axes4[1]
 ax.bar(x_f, cs_means, color=colors_f, alpha=0.85, edgecolor='black', lw=0.5)
 if any(s > 0 for s in cs_stds):
     ax.errorbar(x_f, cs_means, yerr=cs_stds,
                 fmt='none', color='black', capsize=4, lw=1.2, zorder=5)
-# =============================================================================
-# if len(x_f) >= 2:
-#     z_cs = np.polyfit(x_f, cs_means, 1)
-#     ax.plot(x_f, np.poly1d(z_cs)(x_f), color='black', lw=1.5, ls='-.',
-#             zorder=6, label='Trend (linear)')
-# =============================================================================
+
 if len(x_f) >= 2:
     if COMPARE_MODE == 'ftmy_direct':
-        # ── 연도별 추세선 ────────────────────────────────────────────
+        # trend line
         for yr in sorted(set(years_f4)):
             idx = [i for i, y in enumerate(years_f4) if y == yr]
             if len(idx) < 2:
@@ -1649,47 +1517,13 @@ ax.set_title('Cold Snap', fontsize = subtitle_size)
 ax.legend(fontsize=legend_size)
 ax.grid(alpha=0.3, axis='y')
 
-# =============================================================================
-# # ── (1,0) HW 변화량 (Baseline = 0) ───────────────────────────────────
-# ax = axes4[1, 0]
-# bar_colors_hw = ['#F44336' if v >= 0 else '#2196F3' for v in delta_hw]
-# ax.bar(x_f, delta_hw, color=bar_colors_hw, alpha=0.85,
-#        edgecolor='black', lw=0.5)
-# if any(s > 0 for s in hw_stds):
-#     ax.errorbar(x_f, delta_hw, yerr=hw_stds,
-#                 fmt='none', color='black', capsize=4, lw=1.2, zorder=5)
-# ax.axhline(0, color='gray', lw=2, ls='--', label='Baseline (Δ = 0)')
-# ax.set_xticks(x_f)
-# ax.set_xticklabels(labels_f, rotation=45, ha='right', fontsize=8)
-# ax.set_ylabel('Δ Extreme Hot Days per Year\n(Future − Baseline)')
-# ax.set_title('Heat Wave — Change from Baseline\n'
-#              '(Red = Increase  /  Blue = Decrease)')
-# ax.legend(fontsize=9); ax.grid(alpha=0.3, axis='y')
-# 
-# # ── (1,1) CS 변화량 (Baseline = 0) ───────────────────────────────────
-# ax = axes4[1, 1]
-# bar_colors_cs = ['#2196F3' if v >= 0 else '#F44336' for v in delta_cs]
-# ax.bar(x_f, delta_cs, color=bar_colors_cs, alpha=0.85,
-#        edgecolor='black', lw=0.5)
-# if any(s > 0 for s in cs_stds):
-#     ax.errorbar(x_f, delta_cs, yerr=cs_stds,
-#                 fmt='none', color='black', capsize=4, lw=1.2, zorder=5)
-# ax.axhline(0, color='gray', lw=2, ls='--', label='Baseline (Δ = 0)')
-# ax.set_xticks(x_f)
-# ax.set_xticklabels(labels_f, rotation=45, ha='right', fontsize=8)
-# ax.set_ylabel('Δ Extreme Cold Days per Year\n(Future − Baseline)')
-# ax.set_title('Cold Snap — Change from Baseline\n'
-#              '(Blue = Increase  /  Red = Decrease)')
-# ax.legend(fontsize=9); ax.grid(alpha=0.3, axis='y')
-# 
-# =============================================================================
 plt.tight_layout()
 plt.savefig(result_dir + 'Fig4_extreme_event_frequency.png',
             dpi=300, bbox_inches='tight')
 plt.show()
 
 
-# ── 5. CSV 저장 ───────────────────────────────────────────────────────
+# save results
 df_freq = pd.DataFrame({
     'Scenario'          : labels_f,
     'HW (days/yr)'      : np.round(hw_means, 1),
@@ -1707,6 +1541,6 @@ baseline_row = pd.DataFrame([{
 pd.concat([baseline_row, df_freq], ignore_index=True).to_csv(
     result_dir + 'extreme_event_frequency.csv', index=False)
 
-print(f'\n[Fig4] 완료 → {result_dir}')
+print(f'\n[Fig4] done → {result_dir}')
 print('  Fig4_extreme_event_frequency.png')
 print('  extreme_event_frequency.csv')

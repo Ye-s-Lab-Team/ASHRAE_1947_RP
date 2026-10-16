@@ -44,30 +44,30 @@ ConvergenceLimits,
     20;                       !- Maximum HVAC Iterations
 
 Site:Location,
-    Albuquerque.Intl.Sunport_NM_USA WMO=723650,    !- Name
-    35.04,                    !- Latitude
-    -106.62,                  !- Longitude
-    -7,                       !- Time Zone
-    1620;                     !- Elevation
+    Tampa-MacDill.AFB_FL_USA WMO=747880,    !- Name
+    27.85,                    !- Latitude
+    -82.52,                   !- Longitude
+    -5,                       !- Time Zone
+    8;                        !- Elevation
 
 SizingPeriod:DesignDay,
-    Albuquerque.Intl.Sunport_NM_USA Ann Htg 99.6% Condns DB,    !- Name
-    12,                       !- Month
+    Tampa-MacDill.AFB_FL_USA Ann Htg 99.6% Condns DB,    !- Name
+    1,                        !- Month
     21,                       !- Day of Month
     WinterDesignDay,          !- Day Type
-    -7.9,                     !- Maximum DryBulb Temperature
+    4.6,                      !- Maximum DryBulb Temperature
     0,                        !- Daily DryBulb Temperature Range
     DefaultMultipliers,       !- DryBulb Temperature Range Modifier Type
     ,                         !- DryBulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                  !- Humidity Condition Type
-    -7.9,                     !- Wetbulb or DewPoint at Maximum DryBulb
+    4.6,                      !- Wetbulb or DewPoint at Maximum DryBulb
     ,                         !- Humidity Condition Day Schedule Name
     ,                         !- Humidity Ratio at Maximum DryBulb
     ,                         !- Enthalpy at Maximum DryBulb
     ,                         !- Daily WetBulb Temperature Range
-    83318,                    !- Barometric Pressure
-    3.2,                      !- Wind Speed
-    0,                        !- Wind Direction
+    101229,                   !- Barometric Pressure
+    2.5,                      !- Wind Speed
+    10,                       !- Wind Direction
     No,                       !- Rain Indicator
     No,                       !- Snow Indicator
     No,                       !- Daylight Saving Time Indicator
@@ -79,31 +79,31 @@ SizingPeriod:DesignDay,
     0;                        !- Sky Clearness
 
 SizingPeriod:DesignDay,
-    Albuquerque.Intl.Sunport_NM_USA Ann Clg .4% Condns DB=>MWB,    !- Name
-    7,                        !- Month
+    Tampa-MacDill.AFB_FL_USA Ann Clg .4% Condns DB=>MWB,    !- Name
+    8,                        !- Month
     21,                       !- Day of Month
     SummerDesignDay,          !- Day Type
-    35.1,                     !- Maximum DryBulb Temperature
-    13.5,                     !- Daily DryBulb Temperature Range
+    33.9,                     !- Maximum DryBulb Temperature
+    7.9,                      !- Daily DryBulb Temperature Range
     DefaultMultipliers,       !- DryBulb Temperature Range Modifier Type
     ,                         !- DryBulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                  !- Humidity Condition Type
-    15.7,                     !- Wetbulb or DewPoint at Maximum DryBulb
+    25.1,                     !- Wetbulb or DewPoint at Maximum DryBulb
     ,                         !- Humidity Condition Day Schedule Name
     ,                         !- Humidity Ratio at Maximum DryBulb
     ,                         !- Enthalpy at Maximum DryBulb
     ,                         !- Daily WetBulb Temperature Range
-    83318,                    !- Barometric Pressure
-    4.4,                      !- Wind Speed
-    220,                      !- Wind Direction
+    101229,                   !- Barometric Pressure
+    3.1,                      !- Wind Speed
+    270,                      !- Wind Direction
     No,                       !- Rain Indicator
     No,                       !- Snow Indicator
     No,                       !- Daylight Saving Time Indicator
     ASHRAETau,                !- Solar Model Indicator
     ,                         !- Beam Solar Day Schedule Name
     ,                         !- Diffuse Solar Day Schedule Name
-    0.463,                    !- ASHRAE Clear Sky Optical Depth for Beam Irradiance taub
-    1.887;                    !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance taud
+    0.491,                    !- ASHRAE Clear Sky Optical Depth for Beam Irradiance taub
+    2.016;                    !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance taud
 
 RunPeriod,
     RUNPERIOD 1,              !- Name
@@ -185,24 +185,24 @@ RunPeriodControl:DaylightSavingTime,
     1st Sunday in November;    !- End Date
 
 Site:GroundTemperature:FCfactorMethod,
-    13.7,                     !- January Ground Temperature
-    7,                        !- February Ground Temperature
-    2.1,                      !- March Ground Temperature
-    2.6,                      !- April Ground Temperature
-    4.3,                      !- May Ground Temperature
-    8.8,                      !- June Ground Temperature
-    13.9,                     !- July Ground Temperature
-    17.8,                     !- August Ground Temperature
-    23.2,                     !- September Ground Temperature
-    25.6,                     !- October Ground Temperature
-    24.1,                     !- November Ground Temperature
-    20.5;                     !- December Ground Temperature
+    24.2,                     !- January Ground Temperature
+    18.9,                     !- February Ground Temperature
+    15.7,                     !- March Ground Temperature
+    13.6,                     !- April Ground Temperature
+    15.5,                     !- May Ground Temperature
+    17.1,                     !- June Ground Temperature
+    21.2,                     !- July Ground Temperature
+    26.9,                     !- August Ground Temperature
+    27.6,                     !- September Ground Temperature
+    27.9,                     !- October Ground Temperature
+    27.4,                     !- November Ground Temperature
+    26.2;                     !- December Ground Temperature
 
 Site:WaterMainsTemperature,
     Correlation,              !- Calculation Method
     ,                         !- Temperature Schedule Name
-    13.6333333333333,         !- Annual Average Outdoor Air Temperature
-    23.5;                     !- Maximum Difference In Monthly Average Outdoor Air Temperatures
+    21.85,                    !- Annual Average Outdoor Air Temperature
+    14.3;                     !- Maximum Difference In Monthly Average Outdoor Air Temperatures
 
 ScheduleTypeLimits,
     Any Number;               !- Name
@@ -2889,19 +2889,19 @@ Schedule:Compact,
     Until: 06:00,             !- Field 3
     0.0,                      !- Field 4
     Until: 07:00,             !- Field 5
-    0.131,                    !- Field 6
+    0.144,                    !- Field 6
     Until: 08:00,             !- Field 7
     1.0,                      !- Field 8
     Until: 12:00,             !- Field 9
-    0.131,                    !- Field 10
+    0.144,                    !- Field 10
     Until: 13:00,             !- Field 11
     1.0,                      !- Field 12
     Until: 17:00,             !- Field 13
-    0.131,                    !- Field 14
+    0.144,                    !- Field 14
     Until: 18:00,             !- Field 15
     1.0,                      !- Field 16
     Until: 19:00,             !- Field 17
-    0.131,                    !- Field 18
+    0.144,                    !- Field 18
     Until: 24:00,             !- Field 19
     0.0,                      !- Field 20
     For: Saturday Sunday Holidays AllOtherDays,    !- Field 21
@@ -3020,105 +3020,105 @@ Schedule:Compact,
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 01:00,             !- Field 3
-    0.095,                    !- Field 4
+    0.133,                    !- Field 4
     Until: 02:00,             !- Field 5
-    0.095,                    !- Field 6
+    0.133,                    !- Field 6
     Until: 03:00,             !- Field 7
-    0.095,                    !- Field 8
+    0.133,                    !- Field 8
     Until: 04:00,             !- Field 9
-    0.095,                    !- Field 10
+    0.133,                    !- Field 10
     Until: 05:00,             !- Field 11
-    0.095,                    !- Field 12
+    0.133,                    !- Field 12
     Until: 06:00,             !- Field 13
-    0.095,                    !- Field 14
+    0.133,                    !- Field 14
     Until: 07:00,             !- Field 15
-    0.095,                    !- Field 16
+    0.133,                    !- Field 16
     Until: 08:00,             !- Field 17
-    0.095,                    !- Field 18
+    0.133,                    !- Field 18
     Until: 09:00,             !- Field 19
-    0.095,                    !- Field 20
+    0.133,                    !- Field 20
     Until: 10:00,             !- Field 21
-    0.095,                    !- Field 22
+    0.133,                    !- Field 22
     Until: 11:00,             !- Field 23
     0.01,                     !- Field 24
     Until: 12:00,             !- Field 25
-    0.095,                    !- Field 26
+    0.133,                    !- Field 26
     Until: 13:00,             !- Field 27
     0.01,                     !- Field 28
     Until: 14:00,             !- Field 29
-    0.095,                    !- Field 30
+    0.133,                    !- Field 30
     Until: 15:00,             !- Field 31
     0.01,                     !- Field 32
     Until: 16:00,             !- Field 33
-    0.095,                    !- Field 34
+    0.133,                    !- Field 34
     Until: 17:00,             !- Field 35
-    0.095,                    !- Field 36
+    0.133,                    !- Field 36
     Until: 18:00,             !- Field 37
-    0.095,                    !- Field 38
+    0.133,                    !- Field 38
     Until: 19:00,             !- Field 39
-    0.095,                    !- Field 40
+    0.133,                    !- Field 40
     Until: 20:00,             !- Field 41
-    0.095,                    !- Field 42
+    0.133,                    !- Field 42
     Until: 21:00,             !- Field 43
-    0.095,                    !- Field 44
+    0.133,                    !- Field 44
     Until: 22:00,             !- Field 45
-    0.095,                    !- Field 46
+    0.133,                    !- Field 46
     Until: 23:00,             !- Field 47
-    0.095,                    !- Field 48
+    0.133,                    !- Field 48
     Until: 24:00,             !- Field 49
-    0.095,                    !- Field 50
+    0.133,                    !- Field 50
     For: Saturday,            !- Field 51
     Until: 01:00,             !- Field 52
-    0.095,                    !- Field 53
+    0.133,                    !- Field 53
     Until: 02:00,             !- Field 54
-    0.095,                    !- Field 55
+    0.133,                    !- Field 55
     Until: 03:00,             !- Field 56
-    0.095,                    !- Field 57
+    0.133,                    !- Field 57
     Until: 04:00,             !- Field 58
-    0.095,                    !- Field 59
+    0.133,                    !- Field 59
     Until: 05:00,             !- Field 60
-    0.095,                    !- Field 61
+    0.133,                    !- Field 61
     Until: 06:00,             !- Field 62
-    0.095,                    !- Field 63
+    0.133,                    !- Field 63
     Until: 07:00,             !- Field 64
-    0.095,                    !- Field 65
+    0.133,                    !- Field 65
     Until: 08:00,             !- Field 66
-    0.095,                    !- Field 67
+    0.133,                    !- Field 67
     Until: 09:00,             !- Field 68
-    0.095,                    !- Field 69
+    0.133,                    !- Field 69
     Until: 10:00,             !- Field 70
-    0.095,                    !- Field 71
+    0.133,                    !- Field 71
     Until: 11:00,             !- Field 72
     0.01,                     !- Field 73
     Until: 12:00,             !- Field 74
-    0.095,                    !- Field 75
+    0.133,                    !- Field 75
     Until: 13:00,             !- Field 76
     0.01,                     !- Field 77
     Until: 14:00,             !- Field 78
-    0.095,                    !- Field 79
+    0.133,                    !- Field 79
     Until: 15:00,             !- Field 80
     0.01,                     !- Field 81
     Until: 16:00,             !- Field 82
-    0.095,                    !- Field 83
+    0.133,                    !- Field 83
     Until: 17:00,             !- Field 84
-    0.095,                    !- Field 85
+    0.133,                    !- Field 85
     Until: 18:00,             !- Field 86
-    0.095,                    !- Field 87
+    0.133,                    !- Field 87
     Until: 19:00,             !- Field 88
-    0.095,                    !- Field 89
+    0.133,                    !- Field 89
     Until: 20:00,             !- Field 90
-    0.095,                    !- Field 91
+    0.133,                    !- Field 91
     Until: 21:00,             !- Field 92
-    0.095,                    !- Field 93
+    0.133,                    !- Field 93
     Until: 22:00,             !- Field 94
-    0.095,                    !- Field 95
+    0.133,                    !- Field 95
     Until: 23:00,             !- Field 96
-    0.095,                    !- Field 97
+    0.133,                    !- Field 97
     Until: 24:00,             !- Field 98
-    0.095,                    !- Field 99
+    0.133,                    !- Field 99
     For: AllOtherDays,        !- Field 100
     Until: 24:00,             !- Field 101
-    0.095;                    !- Field 102
+    0.133;                    !- Field 102
 
 Schedule:Constant,
     VAV_BOT Max OA Fraction,    !- Name
@@ -3183,8 +3183,8 @@ Material,
     45.28,                    !- Conductivity
     7824,                     !- Density
     500,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7;                      !- Solar Absorptance
+    0.75,                     !- Thermal Absorptance
+    0.45;                     !- Solar Absorptance
 
 Material,
     F12 Asphalt shingles,     !- Name
@@ -3193,8 +3193,8 @@ Material,
     0.04,                     !- Conductivity
     1120,                     !- Density
     1260,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7;                      !- Solar Absorptance
+    0.75,                     !- Thermal Absorptance
+    0.45;                     !- Solar Absorptance
 
 Material,
     F13 Built-up roofing,     !- Name
@@ -3203,8 +3203,8 @@ Material,
     0.16,                     !- Conductivity
     1120,                     !- Density
     1460,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7;                      !- Solar Absorptance
+    0.75,                     !- Thermal Absorptance
+    0.45;                     !- Solar Absorptance
 
 Material,
     G01 13mm gypsum board,    !- Name
@@ -3323,7 +3323,7 @@ Material:NoMass,
 Material:NoMass,
     Nonres_Roof_Insulation,    !- Name
     MediumSmooth,             !- Roughness
-    5.30668495131472,         !- Thermal Resistance
+    4.31888738734588,         !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3331,7 +3331,7 @@ Material:NoMass,
 Material:NoMass,
     Res_Roof_Insulation,      !- Name
     MediumSmooth,             !- Roughness
-    5.30668495131472,         !- Thermal Resistance
+    4.31888738734588,         !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3339,7 +3339,7 @@ Material:NoMass,
 Material:NoMass,
     Semiheated_Roof_Insulation,    !- Name
     MediumSmooth,             !- Roughness
-    1.69689938344704,         !- Thermal Resistance
+    0.821219382144928,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3347,7 +3347,7 @@ Material:NoMass,
 Material:NoMass,
     Nonres_Exterior_Wall_Insulation_grd,    !- Name
     MediumSmooth,             !- Roughness
-    1.44396503616673,         !- Thermal Resistance
+    0.751564675411239,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3355,7 +3355,7 @@ Material:NoMass,
 Material:NoMass,
     Nonres_Exterior_Wall_Insulation_mid,    !- Name
     MediumSmooth,             !- Roughness
-    1.46040986188174,         !- Thermal Resistance
+    0.765557853405732,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3363,7 +3363,7 @@ Material:NoMass,
 Material:NoMass,
     Nonres_Exterior_Wall_Insulation_top,    !- Name
     MediumSmooth,             !- Roughness
-    1.17702964166977,         !- Thermal Resistance
+    0.560959357704704,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3371,7 +3371,7 @@ Material:NoMass,
 Material:NoMass,
     Res_Exterior_Wall_Insulation_grd,    !- Name
     MediumSmooth,             !- Roughness
-    1.44396503616673,         !- Thermal Resistance
+    0.919600789939616,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3379,7 +3379,7 @@ Material:NoMass,
 Material:NoMass,
     Res_Exterior_Wall_Insulation_mid,    !- Name
     MediumSmooth,             !- Roughness
-    1.46040986188174,         !- Thermal Resistance
+    0.938076551121738,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3387,7 +3387,7 @@ Material:NoMass,
 Material:NoMass,
     Res_Exterior_Wall_Insulation_top,    !- Name
     MediumSmooth,             !- Roughness
-    1.17702964166977,         !- Thermal Resistance
+    0.674487056242202,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3395,7 +3395,7 @@ Material:NoMass,
 Material:NoMass,
     Semiheated_Exterior_Wall_Insulation_grd,    !- Name
     MediumSmooth,             !- Roughness
-    0.742613242863674,        !- Thermal Resistance
+    0.518833538844668,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3403,7 +3403,7 @@ Material:NoMass,
 Material:NoMass,
     Semiheated_Exterior_Wall_Insulation_mid,    !- Name
     MediumSmooth,             !- Roughness
-    0.748837161092582,        !- Thermal Resistance
+    0.527655336138411,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3411,7 +3411,7 @@ Material:NoMass,
 Material:NoMass,
     Semiheated_Exterior_Wall_Insulation_top,    !- Name
     MediumSmooth,             !- Roughness
-    0.635217640528693,        !- Thermal Resistance
+    0.394071549744213,        !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -3450,27 +3450,27 @@ Material:NoMass,
 
 WindowMaterial:SimpleGlazingSystem,
     Glazing Layer East,       !- Name
-    2.06120838,               !- UFactor
-    0.359,                    !- Solar Heat Gain Coefficient
-    0.3949;                   !- Visible Transmittance
+    2.5836083,                !- UFactor
+    0.249,                    !- Solar Heat Gain Coefficient
+    0.2739;                   !- Visible Transmittance
 
 WindowMaterial:SimpleGlazingSystem,
     Glazing Layer South,      !- Name
-    2.06120838,               !- UFactor
-    0.359,                    !- Solar Heat Gain Coefficient
-    0.3949;                   !- Visible Transmittance
+    2.5836083,                !- UFactor
+    0.249,                    !- Solar Heat Gain Coefficient
+    0.2739;                   !- Visible Transmittance
 
 WindowMaterial:SimpleGlazingSystem,
     Glazing Layer West,       !- Name
-    2.06120838,               !- UFactor
-    0.359,                    !- Solar Heat Gain Coefficient
-    0.3949;                   !- Visible Transmittance
+    2.5836083,                !- UFactor
+    0.249,                    !- Solar Heat Gain Coefficient
+    0.2739;                   !- Visible Transmittance
 
 WindowMaterial:SimpleGlazingSystem,
     Glazing Layer North,      !- Name
-    2.06120838,               !- UFactor
-    0.359,                    !- Solar Heat Gain Coefficient
-    0.3949;                   !- Visible Transmittance
+    2.5836083,                !- UFactor
+    0.249,                    !- Solar Heat Gain Coefficient
+    0.2739;                   !- Visible Transmittance
 
 Construction,
     Swinging Door_con,        !- Name
@@ -3662,48 +3662,48 @@ Construction,
     Semiheated_Floor_Insulation;    !- Layer 3
 
 Construction,
-    Window_U_0.363_SHGC_East_0.359,    !- Name
+    Window_U_0.455_SHGC_East_0.249,    !- Name
     Glazing Layer East;       !- Outside Layer
 
 Construction,
-    Window_U_0.363_SHGC_South_0.359,    !- Name
+    Window_U_0.455_SHGC_South_0.249,    !- Name
     Glazing Layer South;      !- Outside Layer
 
 Construction,
-    Window_U_0.363_SHGC_West_0.359,    !- Name
+    Window_U_0.455_SHGC_West_0.249,    !- Name
     Glazing Layer West;       !- Outside Layer
 
 Construction,
-    Window_U_0.363_SHGC_North_0.359,    !- Name
+    Window_U_0.455_SHGC_North_0.249,    !- Name
     Glazing Layer North;      !- Outside Layer
 
 Construction:FfactorGroundFloor,
     Perimeter_bot_ZN_1_Floor_Ffactor,    !- Name
-    0.90012,                  !- FFactor
+    1.26363,                  !- FFactor
     207.33814098,             !- Area
     49.911;                   !- PerimeterExposed
 
 Construction:FfactorGroundFloor,
     Perimeter_bot_ZN_2_Floor_Ffactor,    !- Name
-    0.90012,                  !- FFactor
+    1.26363,                  !- FFactor
     131.26219410000022,       !- Area
     33.2738;                  !- PerimeterExposed
 
 Construction:FfactorGroundFloor,
     Perimeter_bot_ZN_3_Floor_Ffactor,    !- Name
-    0.90012,                  !- FFactor
+    1.26363,                  !- FFactor
     207.33814097999993,       !- Area
     49.911;                   !- PerimeterExposed
 
 Construction:FfactorGroundFloor,
     Perimeter_bot_ZN_4_Floor_Ffactor,    !- Name
-    0.90012,                  !- FFactor
+    1.26363,                  !- FFactor
     131.25358392,             !- Area
     33.2738;                  !- PerimeterExposed
 
 Construction:FfactorGroundFloor,
     Core_bot_ZN_5_Floor_Ffactor,    !- Name
-    0.90012,                  !- FFactor
+    1.26363,                  !- FFactor
     983.5365718200002,        !- Area
     0;                        !- PerimeterExposed
 
@@ -5960,7 +5960,7 @@ BuildingSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_1_Wall_South_Window1,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_South_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_South_0.249,    !- Construction Name
     Perimeter_bot_ZN_1_Wall_South,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -5983,7 +5983,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_1_Wall_South_Window2,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_South_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_South_0.249,    !- Construction Name
     Perimeter_bot_ZN_1_Wall_South,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6006,7 +6006,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_1_Wall_South_Window3,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_South_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_South_0.249,    !- Construction Name
     Perimeter_bot_ZN_1_Wall_South,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6075,7 +6075,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_3_Wall_North_Window1,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_North_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_North_0.249,    !- Construction Name
     Perimeter_bot_ZN_3_Wall_North,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6098,7 +6098,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_3_Wall_North_Window2,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_North_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_North_0.249,    !- Construction Name
     Perimeter_bot_ZN_3_Wall_North,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6121,7 +6121,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_3_Wall_North_Window3,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_North_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_North_0.249,    !- Construction Name
     Perimeter_bot_ZN_3_Wall_North,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6190,7 +6190,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_2_Wall_East_Window1,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_East_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_East_0.249,    !- Construction Name
     Perimeter_bot_ZN_2_Wall_East,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6213,7 +6213,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_2_Wall_East_Window2,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_East_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_East_0.249,    !- Construction Name
     Perimeter_bot_ZN_2_Wall_East,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6259,7 +6259,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_4_Wall_West_Window1,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_West_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_West_0.249,    !- Construction Name
     Perimeter_bot_ZN_4_Wall_West,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6282,7 +6282,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_bot_ZN_4_Wall_West_Window2,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_West_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_West_0.249,    !- Construction Name
     Perimeter_bot_ZN_4_Wall_West,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6328,7 +6328,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_mid_ZN_1_Wall_South_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_South_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_South_0.249,    !- Construction Name
     Perimeter_mid_ZN_1_Wall_South,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6351,7 +6351,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_mid_ZN_2_Wall_East_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_East_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_East_0.249,    !- Construction Name
     Perimeter_mid_ZN_2_Wall_East,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6374,7 +6374,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_mid_ZN_3_Wall_North_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_North_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_North_0.249,    !- Construction Name
     Perimeter_mid_ZN_3_Wall_North,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6397,7 +6397,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_mid_ZN_4_Wall_West_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_West_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_West_0.249,    !- Construction Name
     Perimeter_mid_ZN_4_Wall_West,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6420,7 +6420,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_top_ZN_1_Wall_South_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_South_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_South_0.249,    !- Construction Name
     Perimeter_top_ZN_1_Wall_South,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6443,7 +6443,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_top_ZN_2_Wall_East_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_East_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_East_0.249,    !- Construction Name
     Perimeter_top_ZN_2_Wall_East,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6466,7 +6466,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_top_ZN_3_Wall_North_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_North_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_North_0.249,    !- Construction Name
     Perimeter_top_ZN_3_Wall_North,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -6489,7 +6489,7 @@ FenestrationSurface:Detailed,
 FenestrationSurface:Detailed,
     Perimeter_top_ZN_4_Wall_West_Window,    !- Name
     Window,                   !- Surface Type
-    Window_U_0.363_SHGC_West_0.359,    !- Construction Name
+    Window_U_0.455_SHGC_West_0.249,    !- Construction Name
     Perimeter_top_ZN_4_Wall_West,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
@@ -7913,7 +7913,7 @@ ZoneInfiltration:DesignFlowRate,
     Perimeter_bot_ZN_1,       !- Zone or ZoneList or Space or SpaceList Name
     INFIL_Door_Opening_SCH,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.678659786,              !- Design Flow Rate
+    1.04300287,               !- Design Flow Rate
     ,                         !- Flow Rate per Floor Area
     ,                         !- Flow Rate per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -9031,7 +9031,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Core_bottom VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.224,                    !- Constant Minimum Air Flow Fraction
+    0.278,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9052,7 +9052,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_1 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.165,                    !- Constant Minimum Air Flow Fraction
+    0.196,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9073,7 +9073,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_2 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.111,                    !- Constant Minimum Air Flow Fraction
+    0.145,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9094,7 +9094,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_3 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.202,                    !- Constant Minimum Air Flow Fraction
+    0.243,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9115,7 +9115,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_4 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.105,                    !- Constant Minimum Air Flow Fraction
+    0.138,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9136,7 +9136,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Core_mid VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.267,                    !- Constant Minimum Air Flow Fraction
+    0.334,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9157,7 +9157,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_mid_ZN_1 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.149,                    !- Constant Minimum Air Flow Fraction
+    0.19,                     !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9199,7 +9199,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_mid_ZN_3 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.186,                    !- Constant Minimum Air Flow Fraction
+    0.239,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9220,7 +9220,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_mid_ZN_4 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.09,                     !- Constant Minimum Air Flow Fraction
+    0.127,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9241,7 +9241,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Core_top VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.25,                     !- Constant Minimum Air Flow Fraction
+    0.309,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9262,7 +9262,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_1 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.133,                    !- Constant Minimum Air Flow Fraction
+    0.168,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9283,7 +9283,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_2 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.093,                    !- Constant Minimum Air Flow Fraction
+    0.128,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9304,7 +9304,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_3 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.16,                     !- Constant Minimum Air Flow Fraction
+    0.205,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9325,7 +9325,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_4 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.082,                    !- Constant Minimum Air Flow Fraction
+    0.115,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9702,13 +9702,13 @@ ZoneHVAC:EquipmentConnections,
 Fan:VariableVolume,
     PACU_VAV_bot Fan,         !- Name
     HVACOperationSchd,        !- Availability Schedule Name
-    0.6045,                   !- Fan Total Efficiency
+    0.6006,                   !- Fan Total Efficiency
     1314.72,                  !- Pressure Rise
     AUTOSIZE,                 !- Maximum Flow Rate
     Fraction,                 !- Fan Power Minimum Flow Rate Input Method
     0.25,                     !- Fan Power Minimum Flow Fraction
     ,                         !- Fan Power Minimum Air Flow Rate
-    0.93,                     !- Motor Efficiency
+    0.924,                    !- Motor Efficiency
     1,                        !- Motor In Airstream Fraction
     0.0408,                   !- Fan Power Coefficient 1
     0.088,                    !- Fan Power Coefficient 2
@@ -9740,13 +9740,13 @@ Fan:VariableVolume,
 Fan:VariableVolume,
     PACU_VAV_top Fan,         !- Name
     HVACOperationSchd,        !- Availability Schedule Name
-    0.6045,                   !- Fan Total Efficiency
+    0.6006,                   !- Fan Total Efficiency
     1314.72,                  !- Pressure Rise
     AUTOSIZE,                 !- Maximum Flow Rate
     Fraction,                 !- Fan Power Minimum Flow Rate Input Method
     0.25,                     !- Fan Power Minimum Flow Fraction
     ,                         !- Fan Power Minimum Air Flow Rate
-    0.93,                     !- Motor Efficiency
+    0.924,                    !- Motor Efficiency
     1,                        !- Motor In Airstream Fraction
     0.0408,                   !- Fan Power Coefficient 1
     0.088,                    !- Fan Power Coefficient 2
@@ -9761,7 +9761,7 @@ Coil:Cooling:DX:TwoSpeed,
     Always_On,                !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
-    3.39928881549157,         !- High Speed Gross Rated Cooling COP
+    3.56925325626615,         !- High Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- High Speed Rated Air Flow Rate
     ,                         !- High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9775,7 +9775,7 @@ Coil:Cooling:DX:TwoSpeed,
     LgDXalt_PLR,              !- Part Load Fraction Correlation Curve Name
     AUTOSIZE,                 !- Low Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- Low Speed Gross Rated Sensible Heat Ratio
-    3.39928881549157,         !- Low Speed Gross Rated Cooling COP
+    3.56925325626615,         !- Low Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- Low Speed Rated Air Flow Rate
     ,                         !- Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9788,7 +9788,7 @@ Coil:Cooling:DX:TwoSpeed,
     Always_On,                !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
-    3.39928881549157,         !- High Speed Gross Rated Cooling COP
+    3.56925325626615,         !- High Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- High Speed Rated Air Flow Rate
     ,                         !- High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9802,7 +9802,7 @@ Coil:Cooling:DX:TwoSpeed,
     LgDXalt_PLR,              !- Part Load Fraction Correlation Curve Name
     AUTOSIZE,                 !- Low Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- Low Speed Gross Rated Sensible Heat Ratio
-    3.39928881549157,         !- Low Speed Gross Rated Cooling COP
+    3.56925325626615,         !- Low Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- Low Speed Rated Air Flow Rate
     ,                         !- Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9815,7 +9815,7 @@ Coil:Cooling:DX:TwoSpeed,
     Always_On,                !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
-    3.39928881549157,         !- High Speed Gross Rated Cooling COP
+    3.56925325626615,         !- High Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- High Speed Rated Air Flow Rate
     ,                         !- High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9829,7 +9829,7 @@ Coil:Cooling:DX:TwoSpeed,
     LgDXalt_PLR,              !- Part Load Fraction Correlation Curve Name
     AUTOSIZE,                 !- Low Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- Low Speed Gross Rated Sensible Heat Ratio
-    3.39928881549157,         !- Low Speed Gross Rated Cooling COP
+    3.56925325626615,         !- Low Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- Low Speed Rated Air Flow Rate
     ,                         !- Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9973,13 +9973,13 @@ Coil:Heating:Electric,
     ;                         !- Temperature Setpoint Node Name
 
 COIL:HEATING:ELECTRIC,
-    PACU_VAV_top Heating Coil,    !- Name
+    PACU_VAV_bot Heating Coil,    !- Name
     Always_On,                !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
-    PACU_VAV_top_CoolC-PACU_VAV_top_HeatCNode,    !- Air Inlet Node Name
-    PACU_VAV_top_HeatC-PACU_VAV_top FanNode,    !- Air Outlet Node Name
-    PACU_VAV_top_HeatC-PACU_VAV_top FanNode;    !- Temperature Setpoint Node Name
+    PACU_VAV_bot_CoolC-PACU_VAV_bot_HeatCNode,    !- Air Inlet Node Name
+    PACU_VAV_bot_HeatC-PACU_VAV_bot FanNode,    !- Air Outlet Node Name
+    PACU_VAV_bot_HeatC-PACU_VAV_bot FanNode;    !- Temperature Setpoint Node Name
 
 COIL:HEATING:ELECTRIC,
     PACU_VAV_mid Heating Coil,    !- Name
@@ -9991,13 +9991,13 @@ COIL:HEATING:ELECTRIC,
     PACU_VAV_mid_HeatC-PACU_VAV_mid FanNode;    !- Temperature Setpoint Node Name
 
 COIL:HEATING:ELECTRIC,
-    PACU_VAV_bot Heating Coil,    !- Name
+    PACU_VAV_top Heating Coil,    !- Name
     Always_On,                !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
-    PACU_VAV_bot_CoolC-PACU_VAV_bot_HeatCNode,    !- Air Inlet Node Name
-    PACU_VAV_bot_HeatC-PACU_VAV_bot FanNode,    !- Air Outlet Node Name
-    PACU_VAV_mid_HeatC-PACU_VAV_mid FanNode;    !- Temperature Setpoint Node Name
+    PACU_VAV_top_CoolC-PACU_VAV_top_HeatCNode,    !- Air Inlet Node Name
+    PACU_VAV_top_HeatC-PACU_VAV_top FanNode,    !- Air Outlet Node Name
+    PACU_VAV_top_HeatC-PACU_VAV_top FanNode;    !- Temperature Setpoint Node Name
 
 CoilSystem:Cooling:DX,
     PACU_VAV_bot Cooling Coil,    !- Name
@@ -10034,7 +10034,7 @@ Controller:OutdoorAir,
     PACU_VAV_bot_OAInlet Node,    !- Actuator Node Name
     0,                        !- Minimum Outdoor Air Flow Rate
     AUTOSIZE,                 !- Maximum Outdoor Air Flow Rate
-    DifferentialDryBulb,      !- Economizer Control Type
+    DifferentialEnthalpy,     !- Economizer Control Type
     ModulateFlow,             !- Economizer Control Action Type
     ,                         !- Economizer Maximum Limit DryBulb Temperature
     ,                         !- Economizer Maximum Limit Enthalpy
@@ -10062,7 +10062,7 @@ Controller:OutdoorAir,
     PACU_VAV_mid_OAInlet Node,    !- Actuator Node Name
     0,                        !- Minimum Outdoor Air Flow Rate
     AUTOSIZE,                 !- Maximum Outdoor Air Flow Rate
-    DifferentialDryBulb,      !- Economizer Control Type
+    DifferentialEnthalpy,     !- Economizer Control Type
     ModulateFlow,             !- Economizer Control Action Type
     ,                         !- Economizer Maximum Limit DryBulb Temperature
     ,                         !- Economizer Maximum Limit Enthalpy
@@ -10090,7 +10090,7 @@ Controller:OutdoorAir,
     PACU_VAV_top_OAInlet Node,    !- Actuator Node Name
     0,                        !- Minimum Outdoor Air Flow Rate
     AUTOSIZE,                 !- Maximum Outdoor Air Flow Rate
-    DifferentialDryBulb,      !- Economizer Control Type
+    DifferentialEnthalpy,     !- Economizer Control Type
     ModulateFlow,             !- Economizer Control Action Type
     ,                         !- Economizer Maximum Limit DryBulb Temperature
     ,                         !- Economizer Maximum Limit Enthalpy
@@ -11720,6 +11720,24 @@ AvailabilityManagerAssignmentList,
     PACU_VAV_top Availability Manager;    !- Availability Manager 1 Name
 
 SetpointManager:Scheduled,
+    PACU_VAV_bot SAT setpoint,    !- Name
+    Temperature,              !- Control Variable
+    Supply-Air-Temp-Sch,      !- Schedule Name
+    PACU_VAV_bot Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
+
+SetpointManager:Scheduled,
+    PACU_VAV_mid SAT setpoint,    !- Name
+    Temperature,              !- Control Variable
+    Supply-Air-Temp-Sch,      !- Schedule Name
+    PACU_VAV_mid Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
+
+SetpointManager:Scheduled,
+    PACU_VAV_top SAT setpoint,    !- Name
+    Temperature,              !- Control Variable
+    Supply-Air-Temp-Sch,      !- Schedule Name
+    PACU_VAV_top Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
+
+SetpointManager:Scheduled,
     SWHSys1 Loop Setpoint Manager,    !- Name
     Temperature,              !- Control Variable
     SHWSys1-Loop-Temp-Schedule,    !- Schedule Name
@@ -11797,33 +11815,6 @@ SetpointManager:MixedAir,
     PACU_VAV_top Supply Equipment Outlet Node,    !- Fan Outlet Node Name
     PACU_VAV_top_OA-PACU_VAV_top_CoolCNode;    !- Setpoint Node or NodeList Name
 
-SetpointManager:Warmest,
-    PACU_VAV_bot Supply Air Temperature Manager,    !- Name
-    Temperature,              !- Control Variable
-    PACU_VAV_bot,             !- HVAC Air Loop Name
-    12.8,                     !- Minimum Setpoint Temperature
-    15.6,                     !- Maximum Setpoint Temperature
-    MaximumTemperature,       !- Strategy
-    PACU_VAV_bot Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
-
-SetpointManager:Warmest,
-    PACU_VAV_mid Supply Air Temperature Manager,    !- Name
-    Temperature,              !- Control Variable
-    PACU_VAV_mid,             !- HVAC Air Loop Name
-    12.8,                     !- Minimum Setpoint Temperature
-    15.6,                     !- Maximum Setpoint Temperature
-    MaximumTemperature,       !- Strategy
-    PACU_VAV_mid Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
-
-SetpointManager:Warmest,
-    PACU_VAV_top Supply Air Temperature Manager,    !- Name
-    Temperature,              !- Control Variable
-    PACU_VAV_top,             !- HVAC Air Loop Name
-    12.8,                     !- Minimum Setpoint Temperature
-    15.6,                     !- Maximum Setpoint Temperature
-    MaximumTemperature,       !- Strategy
-    PACU_VAV_top Supply Equipment Outlet Node;    !- Setpoint Node or NodeList Name
-
 Generator:PVWatts,
     PV_module,                !- Name
     5,                        !- PVWatts Version
@@ -11837,11 +11828,6 @@ Generator:PVWatts,
     ,                         !- Surface Name
     ;                         !- Ground Coverage Ratio
 
-ElectricLoadCenter:Inverter:PVWatts,
-    PV_Inverter,              !- Name
-    1.2,                      !- DC to AC Size Ratio
-    0.96;                     !- Inverter Efficiency
-
 ElectricLoadCenter:Generators,
     PV_Generator,             !- Name
     PV_module,                !- Generator 1 Name
@@ -11849,6 +11835,13 @@ ElectricLoadCenter:Generators,
     32176.5,                  !- Generator 1 Rated Electric Power Output
     PV_SCH,                   !- Generator 1 Availability Schedule Name
     ;                         !- Generator 1 Rated Thermal to Electrical Power Ratio
+
+ELECTRICLOADCENTER:INVERTER:SIMPLE,
+    PV_Inverter,              !- Name
+    ,                         !- Availability Schedule Name
+    ,                         !- Zone Name
+    0,                        !- Radiative Fraction
+    0.96;                     !- Inverter Efficiency
 
 ElectricLoadCenter:Transformer,
     Transformer 1,            !- Name
@@ -12366,13 +12359,13 @@ Output:Table:Monthly,
     SumOrAverage;             !- Aggregation Type for Variable or Meter 1
 
 Output:Table:Monthly,
-    NameHolderMonthlySummary ClimateZone 4B,    !- Name
+    NameHolderMonthlySummary ClimateZone 2A,    !- Name
     3,                        !- Digits After Decimal
     Site Outdoor Air Drybulb Temperature,    !- Variable or Meter 1 Name
     SumOrAverage;             !- Aggregation Type for Variable or Meter 1
 
 Output:Table:Monthly,
-    NameHolderMonthlySummary RepresentCity USA_NM_Albuquerque,    !- Name
+    NameHolderMonthlySummary RepresentCity USA_FL_Tampa,    !- Name
     3,                        !- Digits After Decimal
     Site Outdoor Air Drybulb Temperature,    !- Variable or Meter 1 Name
     SumOrAverage;             !- Aggregation Type for Variable or Meter 1

@@ -44,30 +44,30 @@ ConvergenceLimits,
     20;                       !- Maximum HVAC Iterations
 
 Site:Location,
-    William R Fairchild_WA_USA Design_Conditions,    !- Name
-    48.12,                    !- Latitude
-    -123.5,                   !- Longitude
-    -8,                       !- Time Zone
-    91;                       !- Elevation
+    Buffalo.Niagara.Intl.AP_NY_USA WMO=725280,    !- Name
+    42.94,                    !- Latitude
+    -78.74,                   !- Longitude
+    -5,                       !- Time Zone
+    215;                      !- Elevation
 
 SizingPeriod:DesignDay,
-    William R Fairchild Ann Htg 99.6% Condns DB,    !- Name
+    Buffalo.Niagara.Intl.AP_NY_USA Ann Htg 99.6% Condns DB,    !- Name
     1,                        !- Month
     21,                       !- Day of Month
     WinterDesignDay,          !- Day Type
-    -4.3,                     !- Maximum DryBulb Temperature
+    -16.3,                    !- Maximum DryBulb Temperature
     0,                        !- Daily DryBulb Temperature Range
     DefaultMultipliers,       !- DryBulb Temperature Range Modifier Type
     ,                         !- DryBulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                  !- Humidity Condition Type
-    -4.3,                     !- Wetbulb or DewPoint at Maximum DryBulb
+    -16.3,                    !- Wetbulb or DewPoint at Maximum DryBulb
     ,                         !- Humidity Condition Day Schedule Name
     ,                         !- Humidity Ratio at Maximum DryBulb
     ,                         !- Enthalpy at Maximum DryBulb
     ,                         !- Daily WetBulb Temperature Range
-    100237,                   !- Barometric Pressure
-    1.2,                      !- Wind Speed
-    110,                      !- Wind Direction
+    98769,                    !- Barometric Pressure
+    5.1,                      !- Wind Speed
+    270,                      !- Wind Direction
     No,                       !- Rain Indicator
     No,                       !- Snow Indicator
     No,                       !- Daylight Saving Time Indicator
@@ -79,31 +79,31 @@ SizingPeriod:DesignDay,
     0;                        !- Sky Clearness
 
 SizingPeriod:DesignDay,
-    William R Fairchild Ann Clg .4% Condns DB=>MWB,    !- Name
-    8,                        !- Month
+    Buffalo.Niagara.Intl.AP_NY_USA Ann Clg .4% Condns DB=>MWB,    !- Name
+    7,                        !- Month
     21,                       !- Day of Month
     SummerDesignDay,          !- Day Type
-    26.4,                     !- Maximum DryBulb Temperature
-    9.1,                      !- Daily DryBulb Temperature Range
+    30.3,                     !- Maximum DryBulb Temperature
+    9.3,                      !- Daily DryBulb Temperature Range
     DefaultMultipliers,       !- DryBulb Temperature Range Modifier Type
     ,                         !- DryBulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                  !- Humidity Condition Type
-    17,                       !- Wetbulb or DewPoint at Maximum DryBulb
+    21.8,                     !- Wetbulb or DewPoint at Maximum DryBulb
     ,                         !- Humidity Condition Day Schedule Name
     ,                         !- Humidity Ratio at Maximum DryBulb
     ,                         !- Enthalpy at Maximum DryBulb
     ,                         !- Daily WetBulb Temperature Range
-    100237,                   !- Barometric Pressure
-    2.1,                      !- Wind Speed
-    90,                       !- Wind Direction
+    98769,                    !- Barometric Pressure
+    5.7,                      !- Wind Speed
+    240,                      !- Wind Direction
     No,                       !- Rain Indicator
     No,                       !- Snow Indicator
     No,                       !- Daylight Saving Time Indicator
     ASHRAETau,                !- Solar Model Indicator
     ,                         !- Beam Solar Day Schedule Name
     ,                         !- Diffuse Solar Day Schedule Name
-    0.364,                    !- ASHRAE Clear Sky Optical Depth for Beam Irradiance taub
-    2.489;                    !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance taud
+    0.462,                    !- ASHRAE Clear Sky Optical Depth for Beam Irradiance taub
+    2.001;                    !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance taud
 
 RunPeriod,
     RUNPERIOD 1,              !- Name
@@ -185,24 +185,24 @@ RunPeriodControl:DaylightSavingTime,
     1st Sunday in November;    !- End Date
 
 Site:GroundTemperature:FCfactorMethod,
-    9.3,                      !- January Ground Temperature
-    6.7,                      !- February Ground Temperature
-    4.1,                      !- March Ground Temperature
-    4.2,                      !- April Ground Temperature
-    4.2,                      !- May Ground Temperature
-    5.9,                      !- June Ground Temperature
-    9,                        !- July Ground Temperature
-    10,                       !- August Ground Temperature
-    13.3,                     !- September Ground Temperature
-    15,                       !- October Ground Temperature
-    15.7,                     !- November Ground Temperature
-    13.4;                     !- December Ground Temperature
+    9.7,                      !- January Ground Temperature
+    6,                        !- February Ground Temperature
+    -2.2,                     !- March Ground Temperature
+    -3.4,                     !- April Ground Temperature
+    -4.2,                     !- May Ground Temperature
+    2.7,                      !- June Ground Temperature
+    7.5,                      !- July Ground Temperature
+    13.7,                     !- August Ground Temperature
+    18.6,                     !- September Ground Temperature
+    22,                       !- October Ground Temperature
+    20.7,                     !- November Ground Temperature
+    16.5;                     !- December Ground Temperature
 
 Site:WaterMainsTemperature,
     Correlation,              !- Calculation Method
     ,                         !- Temperature Schedule Name
-    9.23333333333333,         !- Annual Average Outdoor Air Temperature
-    11.6;                     !- Maximum Difference In Monthly Average Outdoor Air Temperatures
+    8.96666666666667,         !- Annual Average Outdoor Air Temperature
+    26.2;                     !- Maximum Difference In Monthly Average Outdoor Air Temperatures
 
 ScheduleTypeLimits,
     Any Number;               !- Name
@@ -3020,105 +3020,105 @@ Schedule:Compact,
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 01:00,             !- Field 3
-    0.114,                    !- Field 4
+    0.112,                    !- Field 4
     Until: 02:00,             !- Field 5
-    0.114,                    !- Field 6
+    0.112,                    !- Field 6
     Until: 03:00,             !- Field 7
-    0.114,                    !- Field 8
+    0.112,                    !- Field 8
     Until: 04:00,             !- Field 9
-    0.114,                    !- Field 10
+    0.112,                    !- Field 10
     Until: 05:00,             !- Field 11
-    0.114,                    !- Field 12
+    0.112,                    !- Field 12
     Until: 06:00,             !- Field 13
-    0.114,                    !- Field 14
+    0.112,                    !- Field 14
     Until: 07:00,             !- Field 15
-    0.114,                    !- Field 16
+    0.112,                    !- Field 16
     Until: 08:00,             !- Field 17
-    0.114,                    !- Field 18
+    0.112,                    !- Field 18
     Until: 09:00,             !- Field 19
-    0.114,                    !- Field 20
+    0.112,                    !- Field 20
     Until: 10:00,             !- Field 21
-    0.114,                    !- Field 22
+    0.112,                    !- Field 22
     Until: 11:00,             !- Field 23
     0.01,                     !- Field 24
     Until: 12:00,             !- Field 25
-    0.114,                    !- Field 26
+    0.112,                    !- Field 26
     Until: 13:00,             !- Field 27
     0.01,                     !- Field 28
     Until: 14:00,             !- Field 29
-    0.114,                    !- Field 30
+    0.112,                    !- Field 30
     Until: 15:00,             !- Field 31
     0.01,                     !- Field 32
     Until: 16:00,             !- Field 33
-    0.114,                    !- Field 34
+    0.112,                    !- Field 34
     Until: 17:00,             !- Field 35
-    0.114,                    !- Field 36
+    0.112,                    !- Field 36
     Until: 18:00,             !- Field 37
-    0.114,                    !- Field 38
+    0.112,                    !- Field 38
     Until: 19:00,             !- Field 39
-    0.114,                    !- Field 40
+    0.112,                    !- Field 40
     Until: 20:00,             !- Field 41
-    0.114,                    !- Field 42
+    0.112,                    !- Field 42
     Until: 21:00,             !- Field 43
-    0.114,                    !- Field 44
+    0.112,                    !- Field 44
     Until: 22:00,             !- Field 45
-    0.114,                    !- Field 46
+    0.112,                    !- Field 46
     Until: 23:00,             !- Field 47
-    0.114,                    !- Field 48
+    0.112,                    !- Field 48
     Until: 24:00,             !- Field 49
-    0.114,                    !- Field 50
+    0.112,                    !- Field 50
     For: Saturday,            !- Field 51
     Until: 01:00,             !- Field 52
-    0.114,                    !- Field 53
+    0.112,                    !- Field 53
     Until: 02:00,             !- Field 54
-    0.114,                    !- Field 55
+    0.112,                    !- Field 55
     Until: 03:00,             !- Field 56
-    0.114,                    !- Field 57
+    0.112,                    !- Field 57
     Until: 04:00,             !- Field 58
-    0.114,                    !- Field 59
+    0.112,                    !- Field 59
     Until: 05:00,             !- Field 60
-    0.114,                    !- Field 61
+    0.112,                    !- Field 61
     Until: 06:00,             !- Field 62
-    0.114,                    !- Field 63
+    0.112,                    !- Field 63
     Until: 07:00,             !- Field 64
-    0.114,                    !- Field 65
+    0.112,                    !- Field 65
     Until: 08:00,             !- Field 66
-    0.114,                    !- Field 67
+    0.112,                    !- Field 67
     Until: 09:00,             !- Field 68
-    0.114,                    !- Field 69
+    0.112,                    !- Field 69
     Until: 10:00,             !- Field 70
-    0.114,                    !- Field 71
+    0.112,                    !- Field 71
     Until: 11:00,             !- Field 72
     0.01,                     !- Field 73
     Until: 12:00,             !- Field 74
-    0.114,                    !- Field 75
+    0.112,                    !- Field 75
     Until: 13:00,             !- Field 76
     0.01,                     !- Field 77
     Until: 14:00,             !- Field 78
-    0.114,                    !- Field 79
+    0.112,                    !- Field 79
     Until: 15:00,             !- Field 80
     0.01,                     !- Field 81
     Until: 16:00,             !- Field 82
-    0.114,                    !- Field 83
+    0.112,                    !- Field 83
     Until: 17:00,             !- Field 84
-    0.114,                    !- Field 85
+    0.112,                    !- Field 85
     Until: 18:00,             !- Field 86
-    0.114,                    !- Field 87
+    0.112,                    !- Field 87
     Until: 19:00,             !- Field 88
-    0.114,                    !- Field 89
+    0.112,                    !- Field 89
     Until: 20:00,             !- Field 90
-    0.114,                    !- Field 91
+    0.112,                    !- Field 91
     Until: 21:00,             !- Field 92
-    0.114,                    !- Field 93
+    0.112,                    !- Field 93
     Until: 22:00,             !- Field 94
-    0.114,                    !- Field 95
+    0.112,                    !- Field 95
     Until: 23:00,             !- Field 96
-    0.114,                    !- Field 97
+    0.112,                    !- Field 97
     Until: 24:00,             !- Field 98
-    0.114,                    !- Field 99
+    0.112,                    !- Field 99
     For: AllOtherDays,        !- Field 100
     Until: 24:00,             !- Field 101
-    0.114;                    !- Field 102
+    0.112;                    !- Field 102
 
 Schedule:Constant,
     VAV_BOT Max OA Fraction,    !- Name
@@ -9031,7 +9031,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Core_bottom VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.272,                    !- Constant Minimum Air Flow Fraction
+    0.266,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9052,7 +9052,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_1 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.151,                    !- Constant Minimum Air Flow Fraction
+    0.179,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9073,7 +9073,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_2 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.143,                    !- Constant Minimum Air Flow Fraction
+    0.136,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9094,7 +9094,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_3 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.322,                    !- Constant Minimum Air Flow Fraction
+    0.267,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9115,7 +9115,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_bot_ZN_4 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.127,                    !- Constant Minimum Air Flow Fraction
+    0.13,                     !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9136,7 +9136,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Core_mid VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.328,                    !- Constant Minimum Air Flow Fraction
+    0.318,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9157,7 +9157,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_mid_ZN_1 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.13,                     !- Constant Minimum Air Flow Fraction
+    0.155,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9199,7 +9199,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_mid_ZN_3 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.283,                    !- Constant Minimum Air Flow Fraction
+    0.236,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9220,7 +9220,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_mid_ZN_4 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.111,                    !- Constant Minimum Air Flow Fraction
+    0.108,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9241,7 +9241,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Core_top VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.326,                    !- Constant Minimum Air Flow Fraction
+    0.306,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9262,7 +9262,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_1 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.123,                    !- Constant Minimum Air Flow Fraction
+    0.142,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9283,7 +9283,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_2 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.115,                    !- Constant Minimum Air Flow Fraction
+    0.11,                     !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9304,7 +9304,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_3 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.251,                    !- Constant Minimum Air Flow Fraction
+    0.206,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9325,7 +9325,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
     Perimeter_top_ZN_4 VAV Box Inlet Node,    !- Air Inlet Node Name
     AUTOSIZE,                 !- Maximum Air Flow Rate
     Constant,                 !- Zone Minimum Air Flow Input Method
-    0.105,                    !- Constant Minimum Air Flow Fraction
+    0.101,                    !- Constant Minimum Air Flow Fraction
     ,                         !- Fixed Minimum Air Flow Rate
     ,                         !- Minimum Air Flow Fraction Schedule Name
     Coil:Heating:Electric,    !- Reheat Coil Object Type
@@ -9703,7 +9703,7 @@ Fan:VariableVolume,
     PACU_VAV_bot Fan,         !- Name
     HVACOperationSchd,        !- Availability Schedule Name
     0.6006,                   !- Fan Total Efficiency
-    1314.72,                  !- Pressure Rise
+    1389.42,                  !- Pressure Rise
     AUTOSIZE,                 !- Maximum Flow Rate
     Fraction,                 !- Fan Power Minimum Flow Rate Input Method
     0.25,                     !- Fan Power Minimum Flow Fraction
@@ -9722,7 +9722,7 @@ Fan:VariableVolume,
     PACU_VAV_mid Fan,         !- Name
     HVACOperationSchd,        !- Availability Schedule Name
     0.6006,                   !- Fan Total Efficiency
-    1314.72,                  !- Pressure Rise
+    1389.42,                  !- Pressure Rise
     AUTOSIZE,                 !- Maximum Flow Rate
     Fraction,                 !- Fan Power Minimum Flow Rate Input Method
     0.25,                     !- Fan Power Minimum Flow Fraction
@@ -9740,13 +9740,13 @@ Fan:VariableVolume,
 Fan:VariableVolume,
     PACU_VAV_top Fan,         !- Name
     HVACOperationSchd,        !- Availability Schedule Name
-    0.6006,                   !- Fan Total Efficiency
-    1314.72,                  !- Pressure Rise
+    0.6045,                   !- Fan Total Efficiency
+    1389.42,                  !- Pressure Rise
     AUTOSIZE,                 !- Maximum Flow Rate
     Fraction,                 !- Fan Power Minimum Flow Rate Input Method
     0.25,                     !- Fan Power Minimum Flow Fraction
     ,                         !- Fan Power Minimum Air Flow Rate
-    0.924,                    !- Motor Efficiency
+    0.93,                     !- Motor Efficiency
     1,                        !- Motor In Airstream Fraction
     0.0408,                   !- Fan Power Coefficient 1
     0.088,                    !- Fan Power Coefficient 2
@@ -9761,7 +9761,7 @@ Coil:Cooling:DX:TwoSpeed,
     Always_On,                !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
-    3.91885238260128,         !- High Speed Gross Rated Cooling COP
+    3.73921769704073,         !- High Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- High Speed Rated Air Flow Rate
     ,                         !- High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9775,7 +9775,7 @@ Coil:Cooling:DX:TwoSpeed,
     LgDXalt_PLR,              !- Part Load Fraction Correlation Curve Name
     AUTOSIZE,                 !- Low Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- Low Speed Gross Rated Sensible Heat Ratio
-    3.91885238260128,         !- Low Speed Gross Rated Cooling COP
+    3.73921769704073,         !- Low Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- Low Speed Rated Air Flow Rate
     ,                         !- Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9788,7 +9788,7 @@ Coil:Cooling:DX:TwoSpeed,
     Always_On,                !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
-    3.91885238260128,         !- High Speed Gross Rated Cooling COP
+    3.73921769704073,         !- High Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- High Speed Rated Air Flow Rate
     ,                         !- High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9802,7 +9802,7 @@ Coil:Cooling:DX:TwoSpeed,
     LgDXalt_PLR,              !- Part Load Fraction Correlation Curve Name
     AUTOSIZE,                 !- Low Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- Low Speed Gross Rated Sensible Heat Ratio
-    3.91885238260128,         !- Low Speed Gross Rated Cooling COP
+    3.73921769704073,         !- Low Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- Low Speed Rated Air Flow Rate
     ,                         !- Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9815,7 +9815,7 @@ Coil:Cooling:DX:TwoSpeed,
     Always_On,                !- Availability Schedule Name
     AUTOSIZE,                 !- High Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- High Speed Rated Sensible Heat Ratio
-    3.56925325626615,         !- High Speed Gross Rated Cooling COP
+    3.73921769704073,         !- High Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- High Speed Rated Air Flow Rate
     ,                         !- High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9829,7 +9829,7 @@ Coil:Cooling:DX:TwoSpeed,
     LgDXalt_PLR,              !- Part Load Fraction Correlation Curve Name
     AUTOSIZE,                 !- Low Speed Gross Rated Total Cooling Capacity
     AUTOSIZE,                 !- Low Speed Gross Rated Sensible Heat Ratio
-    3.56925325626615,         !- Low Speed Gross Rated Cooling COP
+    3.73921769704073,         !- Low Speed Gross Rated Cooling COP
     AUTOSIZE,                 !- Low Speed Rated Air Flow Rate
     ,                         !- Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
     ,                         !- Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
@@ -9973,13 +9973,13 @@ Coil:Heating:Electric,
     ;                         !- Temperature Setpoint Node Name
 
 COIL:HEATING:ELECTRIC,
-    PACU_VAV_top Heating Coil,    !- Name
+    PACU_VAV_bot Heating Coil,    !- Name
     Always_On,                !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
-    PACU_VAV_top_CoolC-PACU_VAV_top_HeatCNode,    !- Air Inlet Node Name
-    PACU_VAV_top_HeatC-PACU_VAV_top FanNode,    !- Air Outlet Node Name
-    PACU_VAV_top_HeatC-PACU_VAV_top FanNode;    !- Temperature Setpoint Node Name
+    PACU_VAV_bot_CoolC-PACU_VAV_bot_HeatCNode,    !- Air Inlet Node Name
+    PACU_VAV_bot_HeatC-PACU_VAV_bot FanNode,    !- Air Outlet Node Name
+    PACU_VAV_bot_HeatC-PACU_VAV_bot FanNode;    !- Temperature Setpoint Node Name
 
 COIL:HEATING:ELECTRIC,
     PACU_VAV_mid Heating Coil,    !- Name
@@ -9991,13 +9991,13 @@ COIL:HEATING:ELECTRIC,
     PACU_VAV_mid_HeatC-PACU_VAV_mid FanNode;    !- Temperature Setpoint Node Name
 
 COIL:HEATING:ELECTRIC,
-    PACU_VAV_bot Heating Coil,    !- Name
+    PACU_VAV_top Heating Coil,    !- Name
     Always_On,                !- Availability Schedule Name
     1,                        !- Efficiency
     AUTOSIZE,                 !- Nominal Capacity
-    PACU_VAV_bot_CoolC-PACU_VAV_bot_HeatCNode,    !- Air Inlet Node Name
-    PACU_VAV_bot_HeatC-PACU_VAV_bot FanNode,    !- Air Outlet Node Name
-    PACU_VAV_mid_HeatC-PACU_VAV_mid FanNode;    !- Temperature Setpoint Node Name
+    PACU_VAV_top_CoolC-PACU_VAV_top_HeatCNode,    !- Air Inlet Node Name
+    PACU_VAV_top_HeatC-PACU_VAV_top FanNode,    !- Air Outlet Node Name
+    PACU_VAV_top_HeatC-PACU_VAV_top FanNode;    !- Temperature Setpoint Node Name
 
 CoilSystem:Cooling:DX,
     PACU_VAV_bot Cooling Coil,    !- Name
@@ -11837,11 +11837,6 @@ Generator:PVWatts,
     ,                         !- Surface Name
     ;                         !- Ground Coverage Ratio
 
-ElectricLoadCenter:Inverter:PVWatts,
-    PV_Inverter,              !- Name
-    1.2,                      !- DC to AC Size Ratio
-    0.96;                     !- Inverter Efficiency
-
 ElectricLoadCenter:Generators,
     PV_Generator,             !- Name
     PV_module,                !- Generator 1 Name
@@ -11849,6 +11844,13 @@ ElectricLoadCenter:Generators,
     32176.5,                  !- Generator 1 Rated Electric Power Output
     PV_SCH,                   !- Generator 1 Availability Schedule Name
     ;                         !- Generator 1 Rated Thermal to Electrical Power Ratio
+
+ELECTRICLOADCENTER:INVERTER:SIMPLE,
+    PV_Inverter,              !- Name
+    ,                         !- Availability Schedule Name
+    ,                         !- Zone Name
+    0,                        !- Radiative Fraction
+    0.96;                     !- Inverter Efficiency
 
 ElectricLoadCenter:Transformer,
     Transformer 1,            !- Name
@@ -12366,13 +12368,13 @@ Output:Table:Monthly,
     SumOrAverage;             !- Aggregation Type for Variable or Meter 1
 
 Output:Table:Monthly,
-    NameHolderMonthlySummary ClimateZone 5C,    !- Name
+    NameHolderMonthlySummary ClimateZone 5A,    !- Name
     3,                        !- Digits After Decimal
     Site Outdoor Air Drybulb Temperature,    !- Variable or Meter 1 Name
     SumOrAverage;             !- Aggregation Type for Variable or Meter 1
 
 Output:Table:Monthly,
-    NameHolderMonthlySummary RepresentCity USA_WA_PortAngeles,    !- Name
+    NameHolderMonthlySummary RepresentCity USA_NY_Buffalo,    !- Name
     3,                        !- Digits After Decimal
     Site Outdoor Air Drybulb Temperature,    !- Variable or Meter 1 Name
     SumOrAverage;             !- Aggregation Type for Variable or Meter 1
